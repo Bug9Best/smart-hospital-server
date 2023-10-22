@@ -1,0 +1,29 @@
+<!-- TODO Change img and coptright name -->
+<div class="layout-topbar">
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"></i>
+    </button>
+
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
+        (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+
+    <a class="layout-topbar-logo" routerLink="">
+        <!-- <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg"
+            alt="logo"> -->
+        <span class="text-white">Blood Donation</span>
+    </a>
+
+    <div #topbarmenu class="layout-topbar-menu"
+        [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <button class="p-link layout-topbar-button mt-1 mr-2"
+        routerLink="/notification">
+            <i class="pi pi-bell"></i>
+            <span>Notification</span>
+        </button>
+        <p-chip class="">
+            <div class="p-3 px-4">Natthaphon D. Best</div>
+        </p-chip>
+    </div>
+</div>
