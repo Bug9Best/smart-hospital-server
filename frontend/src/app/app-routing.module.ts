@@ -10,10 +10,14 @@ const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       { path: '', redirectTo: 'signin', pathMatch: 'full' },
-      // {
-      //   path: 'appointment',
-      //   // loadChildren: () => import('./pages/appointment/appointment.module').then(m => m.AppointmentModule)
-      // },
+      {
+        path: 'news',
+        loadChildren: () => import('./pages/news/news.module').then(m => m.NewsModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
+      },
     ]
   },
   {

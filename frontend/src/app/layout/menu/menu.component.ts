@@ -15,7 +15,7 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'หน้าหลัก',
+                label: 'เมนูหลัก',
                 style: 'font-size: 20px',
                 items: [
                     {
@@ -43,21 +43,10 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-copy',
                         routerLink: ['/news']
                     },
-                ]
-            },
-            {
-                label: 'ข้อมูลส่วนตัว',
-                style: 'font-size: 20px',
-                items: [
                     {
-                        label: 'ประวัติส่วนตัว',
+                        label: 'ข้อมูลส่วนตัว',
                         icon: 'pi pi-fw pi-user',
                         routerLink: ['/profile']
-                    },
-                    {
-                        label: 'ประวัติการบริจาคเลือด',
-                        icon: 'pi pi-fw pi-cog',
-                        routerLink: ['/history']
                     },
                 ]
             },
