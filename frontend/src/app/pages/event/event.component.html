@@ -18,7 +18,8 @@
   </div>
 </div>
 
-<p-dialog header="ข่าวสาร/ประชาสัมพันธ์" [(visible)]="visibleCreateNews" [style]="{width: '50vw'}" (visibleChange)="resetForm()">
+<p-dialog header="ข่าวสาร/ประชาสัมพันธ์" [(visible)]="visibleCreateEvent" [style]="{width: '50vw'}"
+  (visibleChange)="resetForm()">
   <div [formGroup]="formData">
     <div class="grid mb-3">
       <div class="col-12 -mb-2">
@@ -54,6 +55,8 @@
         <label class="required"> รูปภาพ </label>
       </div>
       <div class="col-12">
+        <input type="text" placeholder="ชื่อข่าวสาร/ประชาสัมพันธ์" class="p-inputtext-sm mb-2" pInputText
+          formControlName="img">
         <p-fileUpload #fileUploader mode="basic" chooseIcon="pi pi-upload" name="demo[]"
           accept="image/png,image/jpeg,image/gif,application/pdf" [chooseLabel]="'อัพโหลดไฟล์'" [auto]="true"
           [maxFileSize]="10000000" [multiple]="false" [customUpload]="true" (uploadHandler)="onUpload($event)">
@@ -63,7 +66,7 @@
 
     <p-divider></p-divider>
     <div class="flex justify-content-end">
-      <button pButton class="p-button-success p-button-sm w-2" icon="pi pi-save" label="เพิ่ม"></button>
+      <button pButton class="p-button-success p-button-sm w-2" icon="pi pi-save" label="เพิ่ม" (click)="createEvent()"></button>
     </div>
   </div>
 </p-dialog>
