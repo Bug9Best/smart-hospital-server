@@ -1,28 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DrugService } from 'src/app/services/drug/drug.service';
 
 @Component({
   selector: 'app-drug',
   templateUrl: './drug.component.html',
   styleUrls: ['./drug.component.scss']
 })
-export class DrugComponent {
+export class DrugComponent implements OnInit {
+
+  listDrug: any = [];
+  selectedDrug: any = {}
 
   visibleCreateDrug: boolean = false;
+  visibleEditDrug: boolean = false;
 
   formData: FormGroup = new FormGroup({
-    title: new FormControl(null, [Validators.required]),
-    description: new FormControl(null, [Validators.required]),
-    date: new FormControl(null, [Validators.required]),
-    content: new FormControl(null, [Validators.required]),
-    img: new FormControl(null, [Validators.required]),
-    creatorId: new FormControl(null, [Validators.required]),
+    username: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required]),
   });
 
   constructor(
-    private messageService: MessageService
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private drugService: DrugService
   ) { }
+
+  ngOnInit(): void {
+    this.getDrug();
+  }
+
+  getDrug() {
+
+  }
 
   showDialog(severity: string, summary: string, detail: string) {
     this.messageService.add({
@@ -38,6 +49,12 @@ export class DrugComponent {
 
   resetForm() {
     this.formData.reset();
+    this.visibleCreateDrug = false;
+  }
+
+  openEdit(value: any) {
+    this.visibleEditDrug = true;
+    this.selectedDrug = value;
   }
 
   onUpload(event: any) {
@@ -46,5 +63,44 @@ export class DrugComponent {
 
   createDrug() {
     let data = this.formData;
+    this.drugService.create(data).subscribe(() => {
+      this.showDialog('success', 'สำเร็จ!', 'เพิ่มข้อมูลยาสำเร็จ');
+      this.resetForm();
+      this.getDrug();
+    });
   }
+
+  updateDrug() {
+    this.confirmationService.confirm({
+      header: 'ยืนยันการแก้ไขข้อมูลยา',
+      icon: 'pi pi-exclamation-triangle',
+      message: 'คุณต้องการที่จะแก้ไขข้อมูลยา ใช่หรือไม่?',
+      acceptLabel: 'ยืนยัน',
+      rejectLabel: 'ยกเลิก',
+      accept: () => {
+        // this.staffService.delete(value.id).subscribe((res: any) => {
+        //   this.showDialog('success', 'สำเร็จ!', 'ลบผู้ใช้งานสำเร็จ');
+        //   this.getStaff();
+        // });
+      }
+    });
+  }
+
+  deleteItem(drug: any) {
+    this.confirmationService.confirm({
+      header: 'ยืนยันการลบข้อมูลยา',
+      icon: 'pi pi-exclamation-triangle',
+      message: 'คุณต้องการที่จะลบข้อมูลยา ใช่หรือไม่?',
+      acceptLabel: 'ยืนยัน',
+      rejectLabel: 'ยกเลิก',
+      accept: () => {
+        // this.staffService.delete(value.id).subscribe((res: any) => {
+        //   this.showDialog('success', 'สำเร็จ!', 'ลบผู้ใช้งานสำเร็จ');
+        //   this.getStaff();
+        // });
+      }
+    });
+  }
+
+
 }

@@ -51,6 +51,11 @@ export class StaffComponent {
     this.visibleCreateUser = true;
   }
 
+  openEdit(value: any) {
+    this.visibleEditUser = true;
+    this.selectedUser = value;
+  }
+
   resetForm() {
     this.formData.reset();
     this.visibleCreateUser = false;
@@ -63,11 +68,6 @@ export class StaffComponent {
       this.resetForm();
       this.getStaff();
     });
-  }
-
-  openEdit(value: any) {
-    this.visibleEditUser = true;
-    this.selectedUser = value;
   }
 
   updateStaff() {
