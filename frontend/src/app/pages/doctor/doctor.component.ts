@@ -9,15 +9,16 @@ import { MessageService } from 'primeng/api';
 })
 export class DoctorComponent {
 
+  listDoctor: any = [1];
   visibleCreateDortor: boolean = false;
 
   formData: FormGroup = new FormGroup({
-    title: new FormControl(null, [Validators.required]),
-    description: new FormControl(null, [Validators.required]),
-    date: new FormControl(null, [Validators.required]),
-    content: new FormControl(null, [Validators.required]),
-    img: new FormControl(null, [Validators.required]),
-    creatorId: new FormControl(null, [Validators.required]),
+    prefix: new FormControl(null, [Validators.required]),
+    firstName: new FormControl(null, [Validators.required]),
+    lastName: new FormControl(null, [Validators.required]),
+    position: new FormControl(null, [Validators.required]),
+    url: new FormControl(null, [Validators.required]),
+    branch: new FormControl(null, [Validators.required]),
   });
 
   constructor(
@@ -37,8 +38,13 @@ export class DoctorComponent {
     this.visibleCreateDortor = true;
   }
 
+  onUpload(event: any) {
+    console.log(event);
+  }
+
   resetForm() {
     this.formData.reset();
+    this.visibleCreateDortor = false;
   }
 
   createDoctor() {

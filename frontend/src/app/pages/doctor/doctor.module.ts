@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PageHeaderComponent } from 'src/app/component/page-header/page-header.component';
 import { PrimeNGModule } from 'src/app/modules/primeng.module';
 import { ThaiModule } from 'src/app/modules/thai.module';
+import { NoDatalistComponent } from 'src/app/component/no-datalist/no-datalist.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     PrimeNGModule,
     ThaiModule,
-    PageHeaderComponent
+    PageHeaderComponent,
+    NoDatalistComponent
   ]
 })
 export class DoctorModule { }
