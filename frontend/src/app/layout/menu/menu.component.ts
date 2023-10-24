@@ -38,11 +38,6 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-copy',
                         routerLink: ['/event']
                     },
-                    {
-                        label: 'ข้อมูลส่วนตัว',
-                        icon: 'pi pi-fw pi-user',
-                        routerLink: ['/profile']
-                    },
                 ]
             },
         ];
