@@ -1,21 +1,32 @@
 <div class="content-conatiner">
   <page-header [title]="'ข่าวสาร/ประชาสัมพันธ์'" [label]="'เพิ่มข่าวสาร/ประชาสัมพันธ์'" (onClickButton)="openCreate()">
   </page-header>
-  <div class="grid-custom p-2">
-    <ng-container *ngFor="let item of listNews">
-      <div class="col-4 w-full">
-        <div class="shadow-2 border-round-lg">
-          <div>
-            <img src="https://www.pea.co.th/Portals/0/EasyDNNnews/142661/1.jpg">
-          </div>
-          <div class="flex flex-column px-3 pb-2">
-            <div class="text-lg font-bold">รับบริจาคเลือด</div>
-            <div class="text-gray-500"> 25 คุลาคม 2566 เวลา 00.15 น.</div>
+  <ng-container *ngIf="listEvent.length; else noData">
+    <div class="grid-custom p-2">
+      <ng-container *ngFor="let item of listEvent">
+        <div class="col-4 w-full">
+          <div class="shadow-2 border-round-lg cursor-pointer" (click)="openDetail(item)">
+            <div>
+              <img src="{{ item.img }}" class="grid-img">
+            </div>
+            <div class="flex flex-column px-3 pb-2">
+              <div class="text-lg font-bold">{{ item.title }}</div>
+              <div class="text-gray-500"> {{ item.date | date:"dd/MM/yy เวลา h:mm น." }}</div>
+            </div>
           </div>
         </div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template #noData>
+    <div class="w-full h-30rem flex justify-content-center align-items-center">
+      <div class="text-center text-gray-500">
+        <i class="pi pi-info-circle" style="font-size: 5rem;"></i>
+        <div class="text-xl font-bold mt-2">ไม่มีข้อมูล</div>
+        <div class="text-lg  mt-2">คุณสามารถเพิ่มข่าวสารได้จากการกดปุ่ม เพิ่มข่าวสาร/ประชาสัมพันธ์</div>
       </div>
-    </ng-container>
-  </div>
+    </div>
+  </ng-template>
 </div>
 
 <p-dialog header="ข่าวสาร/ประชาสัมพันธ์" [(visible)]="visibleCreateEvent" [style]="{width: '50vw'}"
@@ -66,7 +77,21 @@
 
     <p-divider></p-divider>
     <div class="flex justify-content-end">
-      <button pButton class="p-button-success p-button-sm w-2" icon="pi pi-save" label="เพิ่ม" (click)="createEvent()"></button>
+      <button pButton class="p-button-success p-button-sm w-2" icon="pi pi-save" label="เพิ่ม"
+        (click)="createEvent()"></button>
     </div>
+  </div>
+</p-dialog>
+
+<p-dialog header="รายละเอียดข่าวสาร/ประชาสัมพันธ์" [(visible)]="visibleDetailEvent" [style]="{width: '50vw'}"
+  [modal]="true">
+  <div>
+    <img src="{{selectedEvent.img}}" class="w-full">
+    <p-divider></p-divider>
+  </div>
+  <div>
+    <div class="text-2xl font-bold mt-2">{{selectedEvent.title}}</div>
+    <div class="text-gray-500"> {{selectedEvent.date | date:"dd/MM/yy เวลา h:mm น."}}</div>
+    <div class="text-lg mt-2">{{selectedEvent.description}}</div>
   </div>
 </p-dialog>

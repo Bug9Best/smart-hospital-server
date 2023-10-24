@@ -11,15 +11,15 @@ import { EventService } from 'src/app/services/event/event.service';
 export class EventComponent implements OnInit {
 
   currentUser: any = {};
-
+  selectedEvent: any = {};
+  listEvent: any = [];
   visibleCreateEvent: boolean = false;
-  listNews: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+  visibleDetailEvent: boolean = false;
 
   formData: FormGroup = new FormGroup({
     title: new FormControl(null, [Validators.required]),
     description: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
-    content: new FormControl(null, [Validators.required]),
     img: new FormControl(null, [Validators.required]),
     creatorId: new FormControl(null, [Validators.required]),
   });
@@ -31,7 +31,7 @@ export class EventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getNews();
+    this.getEvent();
     this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     if (this.currentUser) {
       this.formData.controls['creatorId'].setValue(this.currentUser.staffId);
@@ -39,19 +39,19 @@ export class EventComponent implements OnInit {
   }
 
 
-  getNews() {
-    // this.newsService
-    //   .getAll()
-    //   .subscribe({
-    //     next: (response) => {
-    //       console.log(response);
-    //     }
-    //   });
+  getEvent() {
+    this.eventService
+      .getAll()
+      .subscribe({
+        next: (response) => {
+          this.listEvent = response;
+        }
+      });
   }
 
   showDialog(severity: string, summary: string, detail: string) {
     this.messageService.add({
-      key : 'app',
+      key: 'app',
       severity: severity,
       summary: summary,
       detail: detail
@@ -60,6 +60,11 @@ export class EventComponent implements OnInit {
 
   openCreate() {
     this.visibleCreateEvent = true;
+  }
+
+  openDetail(event: any) {
+    this.visibleDetailEvent = true;
+    this.selectedEvent = event;
   }
 
   resetForm() {
@@ -77,6 +82,8 @@ export class EventComponent implements OnInit {
       .subscribe({
         next: () => {
           this.showDialog('success', 'สำเร็จ', 'เพิ่มข่าวสารสำเร็จ');
+          this.visibleCreateEvent = false;
+          this.getEvent();
         },
         error: (error) => {
           this.showDialog('error', 'ไม่สำเร็จ', error.error.message);
