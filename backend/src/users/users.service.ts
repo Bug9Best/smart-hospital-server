@@ -1,27 +1,27 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatUserDto } from './dto/create-user.dto';
-import { User as UserModel } from '@prisma/client';
+import { Users } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findByCitizenId(citizenId: string, option?: any): Promise<UserModel> {
+  async findByCitizenId(citizenId: string, option?: any): Promise<Users> {
     return await this.prisma.user.findUnique({
       where: { citizenId },
       ...option,
     });
   }
 
-  async findByUserId(userId: string, option?: any): Promise<UserModel> {
+  async findByUserId(userId: string, option?: any): Promise<Users> {
     return await this.prisma.user.findUnique({
       where: { userId },
       ...option,
     });
   }
 
-  async createUser(data: CreatUserDto): Promise<Omit<UserModel, 'password'>> {
+  async createUser(data: CreatUserDto): Promise<Users> {
     const { citizenId, password, ...patientRecord } = data;
 
     const isUserExist = await this.findByCitizenId(citizenId);
