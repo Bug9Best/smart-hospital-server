@@ -6,7 +6,7 @@ import { environment } from '../environments/environment';
     providedIn: 'root'
 })
 export class BaseService {
-    private baseUrl = environment.baseUrl;
+    private baseUrl = environment.apiUrl;
     path: string = '_blank';
 
     constructor(

@@ -4,6 +4,7 @@ import { NewsComponent } from './news.component';
 import { PrimeNGModule } from 'src/app/modules/primeng.module';
 import { ThaiModule } from 'src/app/modules/thai.module';
 import { RouterModule, Routes } from '@angular/router';
+import { PageHeaderComponent } from 'src/app/component/page-header/page-header.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     PrimeNGModule,
-    ThaiModule
+    ThaiModule,
+    PageHeaderComponent
   ]
 })
 export class NewsModule { }

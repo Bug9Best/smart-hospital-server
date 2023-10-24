@@ -7,10 +7,19 @@
 
 @import "assets/layout/styles/layout/layout.scss";
 
+// Font
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@700&display=swap');
+
 body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+}
+
+body .p-component {
+    font-family: 'Kanit', sans-serif;
 }
 
 .content-conatiner {

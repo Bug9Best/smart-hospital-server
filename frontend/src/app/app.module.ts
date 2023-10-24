@@ -10,12 +10,13 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { PrimeNGModule } from './modules/primeng.module';
 import { AppLayoutModule } from './layout/layout.module';
+import { PageHeaderComponent } from './component/page-header/page-header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,6 +24,7 @@ import { AppLayoutModule } from './layout/layout.module';
     BrowserAnimationsModule,
     PrimeNGModule,
     AppLayoutModule,
+    PageHeaderComponent
   ],
   providers: [
     MessageService,
