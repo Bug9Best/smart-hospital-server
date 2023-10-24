@@ -12,5 +12,7 @@ export class SigninComponent {
     private authService: AuthService
   ) { }
 
- 
+  signin() {
+    
+  }
 }
