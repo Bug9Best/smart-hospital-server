@@ -1,5 +1,5 @@
 <div class="content-conatiner">
-  <page-header [title]="'แพทย์'" [label]="'เพิ่มแพทย์'" (onClickButton)="openCreate()">
+  <page-header [title]="'แพทย์/บุคลากร'" [label]="'เพิ่มแพทย์/บุคลากร'" (onClickButton)="openCreate()">
   </page-header>
   <ng-container *ngIf="listDoctor.length; else noData">
     <ng-container *ngFor="let item of listDoctor">
@@ -25,7 +25,7 @@
 </div>
 
 
-<p-dialog header="แพทย์" [(visible)]="visibleCreateDortor" [style]="{width: '50vw'}" (visibleChange)="resetForm()">
+<p-dialog header="แพทย์/บุคลากร" [(visible)]="visibleCreateDortor" [style]="{width: '50vw'}" (visibleChange)="resetForm()">
   <div [formGroup]="formData">
     <div class="grid mb-3">
       <div class="col-12 -mb-2">

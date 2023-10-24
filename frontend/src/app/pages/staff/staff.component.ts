@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { StaffService } from 'src/app/services/staff/staff.service';
 
 @Component({
   selector: 'app-staff',
@@ -9,24 +10,37 @@ import { MessageService } from 'primeng/api';
 })
 export class StaffComponent {
 
-  visibleCreateStaff: boolean = false;
+  listUser: any = [];
+  selectedUser: any = {}
+  visibleCreateUser: boolean = false;
+  visibleEditUser: boolean = false;
 
   formData: FormGroup = new FormGroup({
-    title: new FormControl(null, [Validators.required]),
-    description: new FormControl(null, [Validators.required]),
-    date: new FormControl(null, [Validators.required]),
-    content: new FormControl(null, [Validators.required]),
-    img: new FormControl(null, [Validators.required]),
-    creatorId: new FormControl(null, [Validators.required]),
+    username: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required]),
+    role: new FormControl("STAFF", [Validators.required]),
   });
 
   constructor(
+    private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private staffService: StaffService
   ) {
+  }
+
+  ngOnInit(): void {
+    this.getStaff();
+  }
+
+  getStaff() {
+    this.staffService.getAll().subscribe((res: any) => {
+      this.listUser = res;
+    });
   }
 
   showDialog(severity: string, summary: string, detail: string) {
     this.messageService.add({
+      key: 'app',
       severity: severity,
       summary: summary,
       detail: detail
@@ -34,14 +48,61 @@ export class StaffComponent {
   }
 
   openCreate() {
-    this.visibleCreateStaff = true;
+    this.visibleCreateUser = true;
   }
 
   resetForm() {
     this.formData.reset();
+    this.visibleCreateUser = false;
   }
 
-  createStaff() {
-    let data = this.formData;
+  createUser() {
+    let data = this.formData.value;
+    this.staffService.create(data).subscribe((res: any) => {
+      this.showDialog('success', 'สำเร็จ!', 'เพิ่มผู้ใช้งานสำเร็จ');
+      this.resetForm();
+      this.getStaff();
+    });
+  }
+
+  openEdit(value: any) {
+    this.visibleEditUser = true;
+    this.selectedUser = value;
+  }
+
+  updateStaff() {
+    let data = this.selectedUser;
+    this.confirmationService.confirm({
+      header: 'ยืนยันการแก้ไขผู้ใช้งาน',
+      icon: 'pi pi-exclamation-triangle',
+      message: 'คุณต้องการที่จะแก้ไขผู้ใช้งาน ใช่หรือไม่?',
+      acceptLabel: 'ยืนยัน',
+      rejectLabel: 'ยกเลิก',
+      accept: () => {
+        this.staffService.update(data).subscribe((res: any) => {
+          this.showDialog('success', 'สำเร็จ!', 'แก้ไขผู้ใช้งานสำเร็จ');
+          this.visibleEditUser = false;
+          this.getStaff();
+        });
+      }
+    });
+
+  }
+
+  deleteItem(value: any) {
+    this.confirmationService.confirm({
+      header: 'ยืนยันการลบผู้ใช้งาน',
+      icon: 'pi pi-exclamation-triangle',
+      message: 'คุณต้องการที่จะลบผู้ใช้งาน ใช่หรือไม่?',
+      acceptLabel: 'ยืนยัน',
+      rejectLabel: 'ยกเลิก',
+      accept: () => {
+        // this.staffService.delete(value.id).subscribe((res: any) => {
+        //   this.showDialog('success', 'สำเร็จ!', 'ลบผู้ใช้งานสำเร็จ');
+        //   this.getStaff();
+        // });
+      }
+    });
+
   }
 }
