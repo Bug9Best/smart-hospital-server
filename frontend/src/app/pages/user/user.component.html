@@ -1,4 +1,91 @@
 <div class="content-conatiner">
   <page-header [title]="'ผู้ใช้งาน'" [label]="'เพิ่มผู้ใช้งาน'" (onClickButton)="openCreate()">
   </page-header>
+  <ng-container *ngIf="listUser.length; else noData">
+    <p-table [value]="listUser" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 60px;">ลำดับ</th>
+          <th>ชื่อผู้ใช้งาน</th>
+          <th>สิทธิ์การใช้งาน</th>
+          <th style="width: 100px;" class="text-center">จัดการ</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+        <tr>
+          <td class="text-center">{{ rowIndex + 1 }}</td>
+          <td>{{ item.username }}</td>
+          <td>{{ item.role }}</td>
+          <td>
+            <div class="flex justify-content-center">
+              <button pButton class="p-button-secondary p-button-text p-button-rounded p-button-sm mr-2"
+                icon="pi pi-pencil" (click)="openEdit(item)"></button>
+              <button pButton class="p-button-danger p-button-text p-button-rounded p-button-sm" icon="pi pi-trash"
+                (click)="deleteItem(item)"></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+  <ng-template #noData>
+    <no-datalist [message]="'ผู้ใช้งาน'" [buttonLabel]="'เพิ่มผู้ใช้งาน'"></no-datalist>
+  </ng-template>
 </div>
+
+
+<p-dialog header="ผู้ใช้งาน" [(visible)]="visibleCreateUser" [style]="{width: '50vw'}" (visibleChange)="resetForm()">
+  <div [formGroup]="formData">
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label class="required"> ชื่อผู้ใช้งาน </label>
+      </div>
+      <div class="col-12">
+        <input type="text" placeholder="ชื่อผู้ใช้งาน" class="p-inputtext-sm" pInputText formControlName="username">
+      </div>
+    </div>
+
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label class="required"> รหัสผ่าน </label>
+      </div>
+      <div class="col-12">
+        <input type="password" placeholder="รหัสผ่าน" class="p-inputtext-sm" pInputText formControlName="password">
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+    <div class="flex justify-content-end">
+      <button pButton class="p-button-success p-button-sm w-full" icon="pi pi-save" label="เพิ่ม"
+        (click)="createUser()"></button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog header="ผู้ใช้งาน" [(visible)]="visibleEditUser" [style]="{width: '50vw'}" (visibleChange)="resetForm()">
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label class="required"> ชื่อผู้ใช้งาน </label>
+    </div>
+    <div class="col-12">
+      <input type="text" placeholder="ชื่อผู้ใช้งาน" class="p-inputtext-sm" pInputText
+        [(ngModel)]="selectedUser.username">
+    </div>
+  </div>
+
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label class="required"> รหัสผ่าน </label>
+    </div>
+    <div class="col-12">
+      <input type="password" placeholder="รหัสผ่าน" class="p-inputtext-sm" pInputText
+        [(ngModel)]="selectedUser.password">
+    </div>
+  </div>
+
+  <p-divider></p-divider>
+  <div class="flex justify-content-end">
+    <button pButton class="p-button-success p-button-sm w-full" icon="pi pi-save" label="อัพเดทข้อมูล"
+      (click)="updateStaff()"></button>
+  </div>
+</p-dialog>

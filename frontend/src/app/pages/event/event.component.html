@@ -19,13 +19,7 @@
     </div>
   </ng-container>
   <ng-template #noData>
-    <div class="w-full h-30rem flex justify-content-center align-items-center">
-      <div class="text-center text-gray-500">
-        <i class="pi pi-info-circle" style="font-size: 5rem;"></i>
-        <div class="text-xl font-bold mt-2">ไม่มีข้อมูล</div>
-        <div class="text-lg  mt-2">คุณสามารถเพิ่มข่าวสารได้จากการกดปุ่ม เพิ่มข่าวสาร/ประชาสัมพันธ์</div>
-      </div>
-    </div>
+    <no-datalist [message]="'ข่าวสาร'" [buttonLabel]="'เพิ่มข่าวสาร/ประชาสัมพันธ์'"></no-datalist>
   </ng-template>
 </div>
 

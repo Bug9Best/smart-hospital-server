@@ -6,6 +6,7 @@ import { ThaiModule } from 'src/app/modules/thai.module';
 import { RouterModule, Routes } from '@angular/router';
 import { PageHeaderComponent } from 'src/app/component/page-header/page-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NoDatalistComponent } from 'src/app/component/no-datalist/no-datalist.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     PrimeNGModule,
     ThaiModule,
-    PageHeaderComponent
+    PageHeaderComponent,
+    NoDatalistComponent
   ]
 })
 export class EventModule { }

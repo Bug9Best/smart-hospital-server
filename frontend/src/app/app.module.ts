@@ -12,6 +12,7 @@ import { PrimeNGModule } from './modules/primeng.module';
 import { AppLayoutModule } from './layout/layout.module';
 import { PageHeaderComponent } from './component/page-header/page-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NoDatalistComponent } from './component/no-datalist/no-datalist.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     PrimeNGModule,
     AppLayoutModule,
-    PageHeaderComponent
+    PageHeaderComponent,
+    NoDatalistComponent
   ],
   providers: [
     MessageService,

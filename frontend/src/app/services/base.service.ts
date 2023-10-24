@@ -29,8 +29,8 @@ export class BaseService {
         return this.http.post(this.getBaseUrl, data);
     }
 
-    update(id: string, data: any) {
-        return this.http.put(`${this.getBaseUrl}/${id}`, data);
+    update(data: any) {
+        return this.http.put(`${this.getBaseUrl}/${data.id}`, data);
     }
 
     delete(id: string) {
