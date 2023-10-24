@@ -11,8 +11,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'profile', pathMatch: 'full' },
       {
-        path: 'user',
-        loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule)
+        path: 'staff',
+        loadChildren: () => import('./pages/staff/staff.module').then(m => m.StaffModule)
       },
       {
         path: 'doctor',

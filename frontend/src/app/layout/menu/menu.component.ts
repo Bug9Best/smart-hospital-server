@@ -21,17 +21,12 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'ผู้ใช้งาน',
                         icon: 'pi pi-user',
-                        routerLink: ['/user']
+                        routerLink: ['/staff']
                     },
                     {
-                        label: 'แพทย์',
+                        label: 'แพทย์/บุคลากร',
                         icon: 'pi pi-users',
                         routerLink: ['/doctor']
-                    },
-                    {
-                        label: 'บุคคลากร',
-                        icon: 'pi pi-users',
-                        routerLink: ['/staff']
                     },
                     {
                         label: 'ข้อมูลยา',
