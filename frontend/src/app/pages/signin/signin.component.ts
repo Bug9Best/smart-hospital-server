@@ -27,13 +27,18 @@ export class SigninComponent {
     let values = this.formData.value;
     this.authService.loginStaff(values).subscribe({
       next: (response: any) => {
-        localStorage.setItem('user', response);
-        if (response.role === StaffRole.STAFF) {
-          this.router.navigate(['/']);
+        if (response.role == "STAFF") {
+          localStorage.setItem('user', JSON.stringify(response));
+          this.router.navigate(['/profile']);
         }
       },
       error: (error: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
+        this.messageService.add({
+          key: 'app',
+          severity: 'error',
+          summary: 'Error',
+          detail: error.error.message
+        });
       }
     });
   }
