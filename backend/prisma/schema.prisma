@@ -24,7 +24,7 @@ enum DoctorBranch {
   PEDIATRICS // กุมารเวช
 }
 
-enum QueueStatus {
+enum Status {
   WAITING
   DONE
 }
@@ -115,6 +115,8 @@ model Appointment {
   title       String
   description String?
 
+  status Status @default(WAITING)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -128,7 +130,7 @@ model Appointment {
 model Queue {
   id     Int         @id @default(autoincrement())
   date   DateTime
-  status QueueStatus @default(WAITING)
+  status Status @default(WAITING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

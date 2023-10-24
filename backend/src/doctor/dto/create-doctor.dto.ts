@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { DoctorBranch } from '@prisma/client';
 import { IsEnum, IsString } from 'class-validator';
 import { CreateStaffDto } from 'src/staff/dto/create-staff.dto';
@@ -13,6 +14,8 @@ export class CreateDoctorDto extends CreateStaffDto {
   url: string;
   @IsString()
   position: string;
+
+  @ApiProperty({ enum: DoctorBranch })
   @IsEnum(DoctorBranch)
   branch: DoctorBranch;
 }
