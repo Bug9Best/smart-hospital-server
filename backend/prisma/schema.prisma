@@ -9,3 +9,160 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum StffRole {
+  STAFF
+  DOCTOR
+}
+
+enum DoctorBranch {
+  ORTHOPEDICS // ออร์โธปิดิกส์
+  PSYCHIATRIST // จิตเวช
+  DENTIST // ทันตแพทย์
+  NEUROLOGIST // ประสาทวิทยา
+  INTERNAL_MEDICINE // อายุรกรรม
+  PEDIATRICS // กุมารเวช
+}
+
+enum QueueStatus {
+  WAITING
+  DONE
+}
+
+//user
+
+model Staff {
+  staffId  String @id @default(uuid())
+  username String @unique
+  password String
+
+  role StffRole
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //staff
+  MyEvent Event[]
+
+  //doctor
+  Appointmented Appointment[]
+  DoctorAccount DoctorAccount?
+}
+
+model DoctorAccount {
+  staffId   String  @id
+  prefix    String
+  firstName String
+  lastName  String
+  img       String?
+  position  String
+
+  branch DoctorBranch
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  staff Staff @relation(fields: [staffId], references: [staffId])
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  date        DateTime
+  img         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Creator   Staff? @relation(fields: [creatorId], references: [staffId])
+  creatorId String
+}
+
+//user
+
+model User {
+  userId    String @id @default(uuid())
+  citizenId String @unique
+  password  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  PatientRecord PatientRecord?
+}
+
+model PatientRecord {
+  userId    String   @id
+  prefix    String
+  firstName String
+  lastName  String
+  birthDate DateTime
+  hnNumber  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [userId])
+
+  Appointment Appointment[]
+  Qeue        Queue[]
+}
+
+model Appointment {
+  id          String   @id @default(cuid())
+  date        DateTime
+  title       String
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Record PatientRecord? @relation(fields: [userId], references: [userId])
+  userId String
+
+  Doctor   Staff? @relation(fields: [doctorId], references: [staffId])
+  doctorId String
+}
+
+model Queue {
+  id     Int         @id @default(autoincrement())
+  date   DateTime
+  status QueueStatus @default(WAITING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Record PatientRecord? @relation(fields: [userId], references: [userId])
+  userId String
+}
+
+//for display only
+model DrugDisplay {
+  id          Int      @id @default(autoincrement())
+  nameTh      String?
+  nameEn      String
+  drugGroup   String
+  dosage      String
+  description String?
+  img         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model StaffDisplay {
+  id        Int      @id @default(autoincrement())
+  name      String
+  img       String?
+  position  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  president Boolean  @default(false)
+}
+
+model FormDisplay {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  url       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
