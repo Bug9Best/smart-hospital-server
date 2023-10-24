@@ -51,6 +51,7 @@ export class EventComponent implements OnInit {
 
   showDialog(severity: string, summary: string, detail: string) {
     this.messageService.add({
+      key : 'app',
       severity: severity,
       summary: summary,
       detail: detail
