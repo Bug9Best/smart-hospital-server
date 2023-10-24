@@ -21,6 +21,12 @@ export class StaffService {
     });
   }
 
+  async findAll(option?: any): Promise<StaffModel[]> {
+    return await this.prisma.staff.findMany({
+      ...option,
+    });
+  }
+
   async createStaff(data: CreateStaffDto): Promise<void> {
     const isStaffExist = await this.findByUsername(data.username);
 
