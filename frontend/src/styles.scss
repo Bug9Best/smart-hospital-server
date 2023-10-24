@@ -32,6 +32,16 @@ body .p-component {
     padding: 1.5rem;
 }
 
-input {
+input,
+textarea {
     width: 100%;
+}
+
+.p-calendar {
+    width: 100%;
+}
+
+.required:after {
+    content: " *";
+    color: red;
 }

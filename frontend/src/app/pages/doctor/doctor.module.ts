@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NewsComponent } from './news.component';
+import { DoctorComponent } from './doctor.component';
+import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PageHeaderComponent } from 'src/app/component/page-header/page-header.component';
 import { PrimeNGModule } from 'src/app/modules/primeng.module';
 import { ThaiModule } from 'src/app/modules/thai.module';
-import { RouterModule, Routes } from '@angular/router';
-import { PageHeaderComponent } from 'src/app/component/page-header/page-header.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
     path: '',
-    component: NewsComponent,
+    component: DoctorComponent,
   },
 ];
 
+
 @NgModule({
   declarations: [
-    NewsComponent
+    DoctorComponent
   ],
   imports: [
     CommonModule,
@@ -28,4 +29,4 @@ const routes: Routes = [
     PageHeaderComponent
   ]
 })
-export class NewsModule { }
+export class DoctorModule { }

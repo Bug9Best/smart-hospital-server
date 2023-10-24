@@ -9,10 +9,26 @@ const routes: Routes = [
     path: '',
     component: AppLayoutComponent,
     children: [
-      { path: '', redirectTo: 'signin', pathMatch: 'full' },
+      { path: '', redirectTo: 'profile', pathMatch: 'full' },
       {
-        path: 'news',
-        loadChildren: () => import('./pages/news/news.module').then(m => m.NewsModule)
+        path: 'user',
+        loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule)
+      },
+      {
+        path: 'doctor',
+        loadChildren: () => import('./pages/doctor/doctor.module').then(m => m.DoctorModule)
+      },
+      {
+        path: 'staff',
+        loadChildren: () => import('./pages/staff/staff.module').then(m => m.StaffModule)
+      },
+      {
+        path: 'event',
+        loadChildren: () => import('./pages/event/event.module').then(m => m.EventModule)
+      },
+      {
+        path: 'drug',
+        loadChildren: () => import('./pages/drug/drug.module').then(m => m.DrugModule)
       },
       {
         path: 'profile',

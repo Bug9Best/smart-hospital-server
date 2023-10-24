@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileComponent } from './profile.component';
+import { DrugComponent } from './drug.component';
 import { RouterModule, Routes } from '@angular/router';
-import { PrimeNGModule } from 'src/app/modules/primeng.module';
-import { ThaiModule } from 'src/app/modules/thai.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PageHeaderComponent } from 'src/app/component/page-header/page-header.component';
+import { PrimeNGModule } from 'src/app/modules/primeng.module';
+import { ThaiModule } from 'src/app/modules/thai.module';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: ProfileComponent,
+    component: DrugComponent,
   },
 ];
 
 @NgModule({
   declarations: [
-    ProfileComponent
+    DrugComponent
   ],
   imports: [
     CommonModule,
@@ -28,4 +29,4 @@ const routes: Routes = [
     PageHeaderComponent
   ]
 })
-export class ProfileModule { }
+export class DrugModule { }

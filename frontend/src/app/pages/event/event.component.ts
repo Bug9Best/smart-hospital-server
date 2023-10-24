@@ -5,10 +5,10 @@ import { NewsService } from 'src/app/services/news/news.service';
 
 @Component({
   selector: 'app-news',
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.scss']
+  templateUrl: './event.component.html',
+  styleUrls: ['./event.component.scss']
 })
-export class NewsComponent implements OnInit {
+export class EventComponent implements OnInit {
 
   visibleCreateNews: boolean = false;
   listNews: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
