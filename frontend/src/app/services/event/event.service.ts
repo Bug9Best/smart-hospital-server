@@ -5,7 +5,7 @@ import { BaseService } from '../base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class NewsService extends BaseService {
-  public override path: string = "drug";
+export class EventService extends BaseService {
+  public override path: string = "event";
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { NewsService } from 'src/app/services/news/news.service';
+import { EventService } from 'src/app/services/event/event.service';
 
 @Component({
   selector: 'app-news',
@@ -10,7 +10,9 @@ import { NewsService } from 'src/app/services/news/news.service';
 })
 export class EventComponent implements OnInit {
 
-  visibleCreateNews: boolean = false;
+  currentUser: any = {};
+
+  visibleCreateEvent: boolean = false;
   listNews: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
   formData: FormGroup = new FormGroup({
@@ -23,13 +25,17 @@ export class EventComponent implements OnInit {
   });
 
   constructor(
-    private newsService: NewsService,
+    private eventService: EventService,
     private messageService: MessageService
   ) {
   }
 
   ngOnInit(): void {
     this.getNews();
+    this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+    if (this.currentUser) {
+      this.formData.controls['creatorId'].setValue(this.currentUser.staffId);
+    }
   }
 
 
@@ -52,7 +58,7 @@ export class EventComponent implements OnInit {
   }
 
   openCreate() {
-    this.visibleCreateNews = true;
+    this.visibleCreateEvent = true;
   }
 
   resetForm() {
@@ -63,17 +69,17 @@ export class EventComponent implements OnInit {
     console.log(event);
   }
 
-  createNews() {
+  createEvent() {
     let data = this.formData;
-    // this.newsService
-    //   .create(data.value)
-    //   .subscribe({
-    //     next: () => {
-    //       this.showDialog('success', 'สำเร็จ', 'เพิ่มข่าวสารสำเร็จ');
-    //     },
-    //     error: (error) => {
-    //       this.showDialog('error', 'ไม่สำเร็จ', error.error.message);
-    //     },
-    //   });
+    this.eventService
+      .create(data.value)
+      .subscribe({
+        next: () => {
+          this.showDialog('success', 'สำเร็จ', 'เพิ่มข่าวสารสำเร็จ');
+        },
+        error: (error) => {
+          this.showDialog('error', 'ไม่สำเร็จ', error.error.message);
+        },
+      });
   }
 }
