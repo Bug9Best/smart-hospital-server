@@ -6,12 +6,13 @@
       <div class="text-xl">(For Medical Personnel)</div>
     </div>
 
-    <div>
+    <div [formGroup]="formData">
       <label for="username" class="block text-900 font-medium mb-2">Username</label>
-      <input id="username" type="text" placeholder="Username" pInputText class="w-full mb-3">
+      <input id="username" type="text" placeholder="Username" pInputText class="w-full mb-3" formControlName="username">
 
       <label for="password1" class="block text-900 font-medium mb-2">Password</label>
-      <input id="password1" type="password" placeholder="Password" pInputText class="w-full mb-3">
+      <input id="password1" type="password" placeholder="Password" pInputText class="w-full mb-3"
+        formControlName="password">
 
       <p-divider></p-divider>
       <button pButton pRipple label="เข้าสู่ระบบ" class="w-full" (click)="signin()"></button>
