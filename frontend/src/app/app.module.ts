@@ -11,6 +11,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { PrimeNGModule } from './modules/primeng.module';
 import { AppLayoutModule } from './layout/layout.module';
 import { PageHeaderComponent } from './component/page-header/page-header.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,8 @@ import { PageHeaderComponent } from './component/page-header/page-header.compone
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     PrimeNGModule,
     AppLayoutModule,

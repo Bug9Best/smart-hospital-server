@@ -19,29 +19,29 @@ export class AppMenuComponent implements OnInit {
                 style: 'font-size: 20px',
                 items: [
                     {
-                        label: 'นัดหมายการบริจาคเลือด',
-                        icon: 'pi pi-fw pi-calendar-plus',
-                        routerLink: ['/appointment']
+                        label: 'ผู้ใช้งาน',
+                        icon: 'pi pi-user',
+                        routerLink: ['/user']
                     },
                     {
-                        label: 'ศูนย์บริจาคเลือดใกล้ฉัน',
-                        icon: 'pi pi-fw pi-map-marker',
-                        routerLink: ['/nearby']
+                        label: 'แพทย์',
+                        icon: 'pi pi-users',
+                        routerLink: ['/doctor']
                     },
                     {
-                        label: 'ธนาคารเลือด',
-                        icon: 'pi pi-fw pi-building',
-                        routerLink: ['/blood-bank']
+                        label: 'บุคคลากร',
+                        icon: 'pi pi-users',
+                        routerLink: ['/staff']
                     },
                     {
-                        label: 'รางวัลจากการบริจาค',
-                        icon: 'pi pi-fw pi-gift',
-                        routerLink: ['/reward']
+                        label: 'ข้อมูลยา',
+                        icon: 'pi pi-info-circle',
+                        routerLink: ['/drug']
                     },
                     {
                         label: 'ข่าวสาร/ประชาสัมพันธ์',
                         icon: 'pi pi-fw pi-copy',
-                        routerLink: ['/news']
+                        routerLink: ['/event']
                     },
                     {
                         label: 'ข้อมูลส่วนตัว',

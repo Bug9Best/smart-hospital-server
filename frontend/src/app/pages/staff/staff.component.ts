@@ -3,13 +3,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-staff',
+  templateUrl: './staff.component.html',
+  styleUrls: ['./staff.component.scss']
 })
-export class ProfileComponent {
+export class StaffComponent {
 
-  visibleEditProfile: boolean = false;
+  visibleCreateStaff: boolean = false;
 
   formData: FormGroup = new FormGroup({
     title: new FormControl(null, [Validators.required]),
@@ -33,20 +33,15 @@ export class ProfileComponent {
     });
   }
 
-  openEdit() {
-    this.visibleEditProfile = true;
+  openCreate() {
+    this.visibleCreateStaff = true;
   }
 
   resetForm() {
     this.formData.reset();
   }
 
-  onUpload(event: any) {
-    console.log(event);
-  }
-
-  createNews() {
+  createStaff() {
     let data = this.formData;
   }
-
 }

@@ -1,0 +1,69 @@
+<div class="content-conatiner">
+  <page-header [title]="'ข่าวสาร/ประชาสัมพันธ์'" [label]="'เพิ่มข่าวสาร/ประชาสัมพันธ์'" (onClickButton)="openCreate()">
+  </page-header>
+  <div class="grid-custom p-2">
+    <ng-container *ngFor="let item of listNews">
+      <div class="col-4 w-full">
+        <div class="shadow-2 border-round-lg">
+          <div>
+            <img src="https://www.pea.co.th/Portals/0/EasyDNNnews/142661/1.jpg">
+          </div>
+          <div class="flex flex-column px-3 pb-2">
+            <div class="text-lg font-bold">รับบริจาคเลือด</div>
+            <div class="text-gray-500"> 25 คุลาคม 2566 เวลา 00.15 น.</div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<p-dialog header="ข่าวสาร/ประชาสัมพันธ์" [(visible)]="visibleCreateNews" [style]="{width: '50vw'}" (visibleChange)="resetForm()">
+  <div [formGroup]="formData">
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label class="required"> ชื่อข่าวสาร/ประชาสัมพันธ์ </label>
+      </div>
+      <div class="col-12">
+        <input type="text" placeholder="ชื่อข่าวสาร/ประชาสัมพันธ์" class="p-inputtext-sm" pInputText
+          formControlName="title">
+      </div>
+    </div>
+
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label class="required"> รายละเอียด </label>
+      </div>
+      <div class="col-12">
+        <textarea rows="5" placeholder="รายละเอียดข่าวสาร/ประชาสัมพันธ์" pInputTextarea
+          formControlName="description"></textarea>
+      </div>
+    </div>
+
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label class="required"> วันที่ของข่าวสาร/ประชาสัมพันธ์ </label>
+      </div>
+      <div class="col-12">
+        <p-calendar appendTo="body" placeholder="เลือกวันที่" formControlName="date"></p-calendar>
+      </div>
+    </div>
+
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label class="required"> รูปภาพ </label>
+      </div>
+      <div class="col-12">
+        <p-fileUpload #fileUploader mode="basic" chooseIcon="pi pi-upload" name="demo[]"
+          accept="image/png,image/jpeg,image/gif,application/pdf" [chooseLabel]="'อัพโหลดไฟล์'" [auto]="true"
+          [maxFileSize]="10000000" [multiple]="false" [customUpload]="true" (uploadHandler)="onUpload($event)">
+        </p-fileUpload>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+    <div class="flex justify-content-end">
+      <button pButton class="p-button-success p-button-sm w-2" icon="pi pi-save" label="เพิ่ม"></button>
+    </div>
+  </div>
+</p-dialog>

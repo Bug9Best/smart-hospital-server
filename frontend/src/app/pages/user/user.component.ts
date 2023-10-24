@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss']
 })
-export class ProfileComponent {
+export class UserComponent {
 
-  visibleEditProfile: boolean = false;
+  visibleCreateUser: boolean = false;
 
   formData: FormGroup = new FormGroup({
     title: new FormControl(null, [Validators.required]),
@@ -33,19 +33,15 @@ export class ProfileComponent {
     });
   }
 
-  openEdit() {
-    this.visibleEditProfile = true;
+  openCreate() {
+    this.visibleCreateUser = true;
   }
 
   resetForm() {
     this.formData.reset();
   }
 
-  onUpload(event: any) {
-    console.log(event);
-  }
-
-  createNews() {
+  createUser() {
     let data = this.formData;
   }
 

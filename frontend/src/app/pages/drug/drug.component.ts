@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-drug',
+  templateUrl: './drug.component.html',
+  styleUrls: ['./drug.component.scss']
 })
-export class ProfileComponent {
+export class DrugComponent {
 
-  visibleEditProfile: boolean = false;
+  visibleCreateDrug: boolean = false;
 
   formData: FormGroup = new FormGroup({
     title: new FormControl(null, [Validators.required]),
@@ -21,9 +21,8 @@ export class ProfileComponent {
   });
 
   constructor(
-    private messageService: MessageService,
-  ) {
-  }
+    private messageService: MessageService
+  ) { }
 
   showDialog(severity: string, summary: string, detail: string) {
     this.messageService.add({
@@ -33,8 +32,8 @@ export class ProfileComponent {
     });
   }
 
-  openEdit() {
-    this.visibleEditProfile = true;
+  openCreate() {
+    this.visibleCreateDrug = true;
   }
 
   resetForm() {
@@ -45,8 +44,7 @@ export class ProfileComponent {
     console.log(event);
   }
 
-  createNews() {
+  createDrug() {
     let data = this.formData;
   }
-
 }
