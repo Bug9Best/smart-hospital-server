@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum StffRole {
+enum StaffRole {
   STAFF
   DOCTOR
 }
@@ -36,7 +36,7 @@ model Staff {
   username String @unique
   password String
 
-  role StffRole
+  role StaffRole
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -67,7 +67,7 @@ model DoctorAccount {
 
 model Event {
   id          Int      @id @default(autoincrement())
-  title       String
+  title       String   @unique
   description String?
   date        DateTime
   img         String
@@ -97,12 +97,13 @@ model PatientRecord {
   firstName String
   lastName  String
   birthDate DateTime
-  hnNumber  String
+  address   String?
+  hnNumber  String   @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [userId])
+  User User @relation(fields: [userId], references: [userId])
 
   Appointment Appointment[]
   Qeue        Queue[]
