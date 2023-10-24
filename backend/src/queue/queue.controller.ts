@@ -1,7 +1,9 @@
 import { Controller, Post, Get, Body } from '@nestjs/common';
 import { QueueService } from './queue.service';
 import { CreateQueueDto } from './dto/create-queue.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('queue')
 @Controller('queue')
 export class QueueController {
   constructor(private readonly queueService: QueueService) {}
