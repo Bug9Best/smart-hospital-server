@@ -9,6 +9,11 @@ import { ApiTags } from '@nestjs/swagger';
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
+  @Get()
+  async getAll(): Promise<any> {
+    return await this.eventService.findAll();
+  }
+
   @Get(':eventId')
   async getDetail(@Param('eventId') id: number): Promise<any> {
     return await this.eventService.getDetail(id);

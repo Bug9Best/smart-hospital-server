@@ -6,6 +6,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { APP_PIPE } from '@nestjs/core';
 import { EventModule } from './event/event.module';
+import { AppointmentModule } from './appointment/appointment.module';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { EventModule } from './event/event.module';
     PrismaModule,
     DoctorModule,
     EventModule,
+    AppointmentModule,
+    QueueModule,
   ],
   controllers: [],
   providers: [
