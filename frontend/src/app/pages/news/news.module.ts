@@ -5,6 +5,7 @@ import { PrimeNGModule } from 'src/app/modules/primeng.module';
 import { ThaiModule } from 'src/app/modules/thai.module';
 import { RouterModule, Routes } from '@angular/router';
 import { PageHeaderComponent } from 'src/app/component/page-header/page-header.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -20,6 +21,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    FormsModule,
+    ReactiveFormsModule,
     PrimeNGModule,
     ThaiModule,
     PageHeaderComponent
