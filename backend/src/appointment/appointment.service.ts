@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Appointment } from '@prisma/client';
+import { Appointment, Status } from '@prisma/client';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 
 @Injectable()
@@ -58,5 +58,28 @@ export class AppointmentService {
 
   async getAll(): Promise<Appointment[]> {
     return this.prisma.appointment.findMany();
+  }
+
+  async updateStatus(
+    appointmentId: string,
+    status: Status,
+  ): Promise<Appointment> {
+    const isAppointmentExist = await this.prisma.appointment.findUnique({
+      where: { id: appointmentId },
+    });
+
+    if (!isAppointmentExist) {
+      throw new HttpException(
+        'Appointment does not exist',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return this.prisma.appointment.update({
+      where: { id: appointmentId },
+      data: {
+        status,
+      },
+    });
   }
 }

@@ -17,7 +17,7 @@ export class EventService {
   }
 
   async create(data: CreateEventDto): Promise<void> {
-    const isStaffExist = await this.staffService.findByUsername(data.creatorId);
+    const isStaffExist = await this.staffService.findById(data.creatorId);
 
     if (!isStaffExist) {
       throw new HttpException('Staff not found', HttpStatus.BAD_REQUEST);
