@@ -9,11 +9,23 @@ export class EventService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly staffService: StaffService,
-  ) {}
+  ) { }
 
   async findAll(): Promise<EventModel[]> {
     const events = await this.prisma.event.findMany();
     return events;
+  }
+
+  async findById(eventId: number): Promise<any> {
+    const event = await this.prisma.event.findUnique({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      throw new HttpException('Event not found', HttpStatus.BAD_REQUEST);
+    }
+
+    return event;
   }
 
   async create(data: CreateEventDto): Promise<void> {
@@ -36,15 +48,20 @@ export class EventService {
     });
   }
 
-  async getDetail(id: number): Promise<any> {
-    const event = await this.prisma.event.findUnique({
-      where: { id },
-    });
-
-    if (!event) {
-      throw new HttpException('Event not found', HttpStatus.BAD_REQUEST);
+  async deleteEvent(id: string): Promise<void> {
+    const isExist = await this.findById(parseInt(id));
+    if (!isExist) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'ไม่พบข้อมูลที่ต้องการ',
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
 
-    return event;
+    await this.prisma.event.delete({
+      where: { id: parseInt(id.toString()) },
+    });
   }
 }
