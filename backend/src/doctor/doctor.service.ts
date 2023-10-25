@@ -8,10 +8,22 @@ export class DoctorService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly staffService: StaffService,
-  ) {}
+  ) { }
 
   async getAll(): Promise<any> {
     return await this.prisma.doctor.findMany();
+  }
+
+  async findById(doctorId: string): Promise<any> {
+    const doctor = await this.prisma.doctor.findUnique({
+      where: { id: doctorId },
+    });
+
+    if (!doctor) {
+      throw new HttpException('ไม่พบข้อมูลหมอ', HttpStatus.BAD_REQUEST);
+    }
+
+    return doctor;
   }
 
   async createDoctor(data: CreateDoctorDto): Promise<void> {
@@ -28,7 +40,7 @@ export class DoctorService {
   }
 
   async deleteDoctor(id: string): Promise<void> {
-    const isExist = await this.staffService.findById(id);
+    const isExist = await this.findById(id);
     if (!isExist) {
       throw new HttpException(
         {

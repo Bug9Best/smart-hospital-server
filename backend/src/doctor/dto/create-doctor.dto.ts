@@ -5,12 +5,16 @@ import { IsEnum, IsString } from 'class-validator';
 export class CreateDoctorDto {
   @IsString()
   prefix: string;
+
   @IsString()
   firstName: string;
+
   @IsString()
   lastName: string;
+
   @IsString()
   img: string;
+
   @IsString()
   position: string;
 

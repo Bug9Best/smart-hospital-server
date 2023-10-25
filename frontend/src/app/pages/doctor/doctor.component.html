@@ -4,15 +4,22 @@
   <ng-container *ngIf="listDoctor.length; else noData">
     <ng-container *ngFor="let item of listDoctor">
       <div class="grid-custom p-2">
-        <div class="col-4 w-full">
+        <div class="col-4 w-full px-5">
           <div class="shadow-2 border-round-lg cursor-pointer">
             <div>
               <img src="{{ item.img || 'https://prakashhospitals.in/wp-content/uploads/2021/02/female-doc.png'}}"
                 class="grid-img">
             </div>
-            <div class="flex flex-column px-3 pb-2">
-              <div class="text-center text-2xl font-bold">{{ item.prefix + item.firstName + " " + item.lastName}}</div>
-              <div class="text-center text-lg text-gray-500"> {{ item.position || "adasd" }}</div>
+            <div class="flex flex-column px-3 pb-2 mt-2">
+              <div class="text-center text-xl font-bold">{{ item.prefix + item.firstName + " " + item.lastName}}</div>
+              <div class="text-center text-lg text-gray-500"> {{ item.position || "" }}</div>
+              <p-divider></p-divider>
+              <div class="flex justify-content-center w-full">
+                <button pButton class="p-button-sm p-button-text p-button-secondary text-gray-500" icon="pi pi-pencil"
+                  (click)="openDetail(item)"></button>
+                <button pButton class="p-button-sm p-button-text p-button-secondary text-gray-500" icon="pi pi-trash"
+                  (click)="deleteDoctor(item)"></button>
+              </div>
             </div>
           </div>
         </div>
@@ -25,7 +32,8 @@
 </div>
 
 
-<p-dialog header="แพทย์/บุคลากร" [(visible)]="visibleCreateDortor" [style]="{width: '50vw'}" (visibleChange)="resetForm()">
+<p-dialog header="แพทย์/บุคลากร" [(visible)]="visibleCreateDortor" [style]="{width: '50vw'}"
+  (visibleChange)="resetForm()">
   <div [formGroup]="formData">
     <div class="grid mb-3">
       <div class="col-12 -mb-2">
@@ -59,7 +67,17 @@
         <label class="required"> ตำแหน่ง </label>
       </div>
       <div class="col-12">
-        <input type="text" placeholder="ตำแหน่ง" class="p-inputtext-sm" pInputText formControlName="lastName">
+        <input type="text" placeholder="ตำแหน่ง" class="p-inputtext-sm" pInputText formControlName="position">
+      </div>
+    </div>
+
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label class="required"> สาขา </label>
+      </div>
+      <div class="col-12">
+        <p-dropdown [options]="listBranch" optionLabel="label" optionValue="value" formControlName="branch">
+        </p-dropdown>
       </div>
     </div>
 
@@ -68,8 +86,7 @@
         <label class="required"> รูปภาพ </label>
       </div>
       <div class="col-12">
-        <input type="text" placeholder="รูปภาพประจำตัว" class="p-inputtext-sm mb-2" pInputText
-          formControlName="url">
+        <input type="text" placeholder="รูปภาพประจำตัว" class="p-inputtext-sm mb-2" pInputText formControlName="img">
         <p-fileUpload #fileUploader mode="basic" chooseIcon="pi pi-upload" name="demo[]"
           accept="image/png,image/jpeg,image/gif,application/pdf" [chooseLabel]="'อัพโหลดไฟล์'" [auto]="true"
           [maxFileSize]="10000000" [multiple]="false" [customUpload]="true" (uploadHandler)="onUpload($event)">
@@ -82,5 +99,78 @@
       <button pButton class="p-button-success p-button-sm w-full" icon="pi pi-save" label="เพิ่ม"
         (click)="createDoctor()"></button>
     </div>
+  </div>
+</p-dialog>
+
+
+<p-dialog header="แพทย์/บุคลากร" [(visible)]="visibleEditDoctor" [style]="{width: '50vw'}">
+  <div class="flex justify-content-center">
+    <img src="{{selectedDoctor.img}}" height="250">
+    <p-divider></p-divider>
+  </div>
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label class="required"> คำนำหน้า </label>
+    </div>
+    <div class="col-12">
+      <input type="text" placeholder="คำนำหน้า" class="p-inputtext-sm" pInputText [(ngModel)]="selectedDoctor.prefix">
+    </div>
+  </div>
+
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label class="required"> ชื่อ </label>
+    </div>
+    <div class="col-12">
+      <input type="text" placeholder="ชื่อ" class="p-inputtext-sm" pInputText [(ngModel)]="selectedDoctor.firstName">
+    </div>
+  </div>
+
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label class="required"> นามสกุล </label>
+    </div>
+    <div class="col-12">
+      <input type="text" placeholder="นามสกุล" class="p-inputtext-sm" pInputText [(ngModel)]="selectedDoctor.lastName">
+    </div>
+  </div>
+
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label class="required"> ตำแหน่ง </label>
+    </div>
+    <div class="col-12">
+      <input type="text" placeholder="ตำแหน่ง" class="p-inputtext-sm" pInputText [(ngModel)]="selectedDoctor.position">
+    </div>
+  </div>
+
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label class="required"> สาขา </label>
+    </div>
+    <div class="col-12">
+      <p-dropdown [options]="listBranch" optionLabel="label" optionValue="value" [(ngModel)]="selectedDoctor.branch">
+      </p-dropdown>
+    </div>
+  </div>
+
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label class="required"> รูปภาพ </label>
+    </div>
+    <div class="col-12">
+      <input type="text" placeholder="รูปภาพประจำตัว" class="p-inputtext-sm mb-2" pInputText
+        [(ngModel)]="selectedDoctor.img">
+      <p-fileUpload #fileUploader mode="basic" chooseIcon="pi pi-upload" name="demo[]"
+        accept="image/png,image/jpeg,image/gif,application/pdf" [chooseLabel]="'อัพโหลดไฟล์'" [auto]="true"
+        [maxFileSize]="10000000" [multiple]="false" [customUpload]="true" (uploadHandler)="onUpload($event)">
+      </p-fileUpload>
+    </div>
+  </div>
+
+  <p-divider></p-divider>
+  <div class="flex justify-content-end">
+    <button pButton class="p-button-success p-button-sm w-full" icon="pi pi-save" label="อัพเดต"
+      (click)="updateDoctor()"></button>
   </div>
 </p-dialog>

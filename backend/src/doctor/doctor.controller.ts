@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
@@ -27,7 +28,7 @@ export class DoctorController {
     return this.doctorService.createDoctor(createDoctorDto);
   }
 
-  @Patch(':doctorId')
+  @Put(':doctorId')
   update(
     @Param('doctorId') doctorId: string,
     @Body() createDoctorDto: UpdateDoctorDto,
