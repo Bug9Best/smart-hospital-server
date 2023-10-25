@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class StaffService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async findById(staffId: string, option?: any): Promise<StaffModel> {
     return await this.prisma.staff.findUnique({
@@ -44,6 +44,30 @@ export class StaffService {
         ...rest,
         password: hashPassword,
       },
+    });
+  }
+
+  async updateStaff(id: string, data: CreateStaffDto): Promise<void> {
+    await this.prisma.staff.update({
+      where: { staffId: id },
+      data: data,
+    });
+  }
+
+  async deleteStaff(id: string): Promise<void> {
+    const isExist = await this.findById(id);
+    if (!isExist) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'ไม่พบข้อมูลหมอ',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    await this.prisma.staff.delete({
+      where: { staffId: id },
     });
   }
 }
