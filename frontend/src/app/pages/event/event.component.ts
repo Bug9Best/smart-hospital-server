@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { EventService } from 'src/app/services/event/event.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 
@@ -27,8 +27,9 @@ export class EventComponent implements OnInit {
   });
 
   constructor(
-    private eventService: EventService,
+    private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private eventService: EventService,
     private storage: AngularFireStorage,
   ) {
   }
@@ -40,7 +41,6 @@ export class EventComponent implements OnInit {
       this.formData.controls['creatorId'].setValue(this.currentUser.staffId);
     }
   }
-
 
   getEvent() {
     this.eventService
@@ -99,5 +99,28 @@ export class EventComponent implements OnInit {
           this.showDialog('error', 'ไม่สำเร็จ', error.error.message);
         },
       });
+  }
+
+  deleteEvent(event: any) {
+    this.confirmationService.confirm({
+      header: 'ยืนยันการลบข่าวสาร',
+      icon: 'pi pi-exclamation-triangle',
+      message: 'คุณต้องการลบข่าวสารนี้ใช่หรือไม่',
+      acceptLabel: 'ยืนยัน',
+      rejectLabel: 'ยกเลิก',
+      accept: () => {
+        this.eventService.delete(event.id).subscribe({
+          next: () => {
+            this.showDialog('success', 'สำเร็จ', 'ลบข่าวสารสำเร็จ');
+            this.visibleDetailEvent = false;
+            this.getEvent();
+          },
+          error: (error) => {
+            this.showDialog('error', 'ไม่สำเร็จ', error.error.message);
+          },
+        });
+      },
+    });
+
   }
 }
