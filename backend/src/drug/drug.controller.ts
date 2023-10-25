@@ -3,9 +3,9 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { DrugService } from './drug.service';
 import { CreateDrugDto } from './dto/create-drug.dto';
@@ -15,7 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('drug')
 @Controller('drug')
 export class DrugController {
-  constructor(private readonly drugService: DrugService) {}
+  constructor(private readonly drugService: DrugService) { }
 
   @Get()
   getAll() {
@@ -32,7 +32,7 @@ export class DrugController {
     return this.drugService.create(createDrugDto);
   }
 
-  @Patch(':drugId')
+  @Put(':drugId')
   update(
     @Param('drugId') drugId: number,
     @Body() updateDrugDto: UpdateDrugDto,

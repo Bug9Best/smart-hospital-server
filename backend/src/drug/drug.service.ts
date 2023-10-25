@@ -5,7 +5,11 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class DrugService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
+
+  async getAll(): Promise<any> {
+    return await this.prisma.drugDisplay.findMany();
+  }
 
   async findByDrugName(drugName: string): Promise<any> {
     return await this.prisma.drugDisplay.findMany({
@@ -21,10 +25,6 @@ export class DrugService {
         id: drugId,
       },
     });
-  }
-
-  async getAll(): Promise<any> {
-    return await this.prisma.drugDisplay.findMany();
   }
 
   async findDetail(drugId: number): Promise<any> {
@@ -48,18 +48,6 @@ export class DrugService {
   }
 
   async create(data: CreateDrugDto): Promise<void> {
-    const isDrugExist = await this.findByDrugName(data.name);
-
-    if (isDrugExist) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'มีชื่อยานี้อยู่แล้ว',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     await this.prisma.drugDisplay.create({
       data,
     });

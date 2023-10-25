@@ -17,8 +17,11 @@ export class DrugComponent implements OnInit {
   visibleEditDrug: boolean = false;
 
   formData: FormGroup = new FormGroup({
-    username: new FormControl(null, [Validators.required]),
-    password: new FormControl(null, [Validators.required]),
+    name: new FormControl(null, [Validators.required]),
+    drugGroup: new FormControl(null, [Validators.required]),
+    dosage: new FormControl(null, [Validators.required]),
+    description: new FormControl(null, [Validators.required]),
+    img: new FormControl(null, [Validators.required]),
   });
 
   constructor(
@@ -32,11 +35,16 @@ export class DrugComponent implements OnInit {
   }
 
   getDrug() {
-
+    this.drugService
+      .getAll()
+      .subscribe((res: any) => {
+        this.listDrug = res;
+      });
   }
 
   showDialog(severity: string, summary: string, detail: string) {
     this.messageService.add({
+      key: 'app',
       severity: severity,
       summary: summary,
       detail: detail
@@ -62,11 +70,16 @@ export class DrugComponent implements OnInit {
   }
 
   createDrug() {
-    let data = this.formData;
-    this.drugService.create(data).subscribe(() => {
-      this.showDialog('success', 'สำเร็จ!', 'เพิ่มข้อมูลยาสำเร็จ');
-      this.resetForm();
-      this.getDrug();
+    let data = this.formData.value;
+    this.drugService.create(data).subscribe({
+      next: (res: any) => {
+        this.showDialog('success', 'สำเร็จ!', 'เพิ่มข้อมูลยาสำเร็จ');
+        this.resetForm();
+        this.getDrug();
+      },
+      error: (err: any) => {
+        this.showDialog('error', 'ไม่สำเร็จ!', err.error.error);
+      }
     });
   }
 
@@ -78,10 +91,16 @@ export class DrugComponent implements OnInit {
       acceptLabel: 'ยืนยัน',
       rejectLabel: 'ยกเลิก',
       accept: () => {
-        // this.staffService.delete(value.id).subscribe((res: any) => {
-        //   this.showDialog('success', 'สำเร็จ!', 'ลบผู้ใช้งานสำเร็จ');
-        //   this.getStaff();
-        // });
+        this.drugService.update(this.selectedDrug.id, this.selectedDrug).subscribe({
+          next: (res: any) => {
+            this.showDialog('success', 'สำเร็จ!', 'ลบข้อมูลยาสำเร็จ');
+            this.visibleEditDrug = false;
+            this.getDrug();
+          },
+          error: (err: any) => {
+            this.showDialog('error', 'ไม่สำเร็จ!', err.error.error);
+          }
+        });
       }
     });
   }
@@ -94,13 +113,16 @@ export class DrugComponent implements OnInit {
       acceptLabel: 'ยืนยัน',
       rejectLabel: 'ยกเลิก',
       accept: () => {
-        // this.staffService.delete(value.id).subscribe((res: any) => {
-        //   this.showDialog('success', 'สำเร็จ!', 'ลบผู้ใช้งานสำเร็จ');
-        //   this.getStaff();
-        // });
+        this.drugService.delete(drug.id).subscribe({
+          next: (res: any) => {
+            this.showDialog('success', 'สำเร็จ!', 'ลบข้อมูลยาสำเร็จ');
+            this.getDrug();
+          },
+          error: (err: any) => {
+            this.showDialog('error', 'ไม่สำเร็จ!', err.error.error);
+          }
+        });
       }
     });
   }
-
-
 }

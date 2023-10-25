@@ -6,16 +6,20 @@
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 60px;">ลำดับ</th>
-          <th>ชื่อผู้ใช้งาน</th>
-          <th>สิทธิ์การใช้งาน</th>
+          <th> ชื่อสามัญ/ทางการค้า </th>
+          <th style="width: 115px;" class="text-center"> ขนาด/ปริมาณ </th>
+          <th> กลุ่มยา </th>
+          <th> คำอธิบายสรรพคุณ </th>
           <th style="width: 100px;" class="text-center">จัดการ</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr>
           <td class="text-center">{{ rowIndex + 1 }}</td>
-          <td>{{ item.username }}</td>
-          <td>{{ item.role }}</td>
+          <td>{{ item.name }}</td>
+          <td class="text-center">{{ item.dosage }}</td>
+          <td>{{ item.drugGroup }}</td>
+          <td>{{ item.description }}</td>
           <td>
             <div class="flex justify-content-center">
               <button pButton class="p-button-secondary p-button-text p-button-rounded p-button-sm mr-2"
@@ -38,19 +42,52 @@
   <div [formGroup]="formData">
     <div class="grid mb-3">
       <div class="col-12 -mb-2">
-        <label class="required"> ชื่อผู้ใช้งาน </label>
+        <label class="required"> ชื่อสามัญ/ชื่อทางการค้า </label>
       </div>
       <div class="col-12">
-        <input type="text" placeholder="ชื่อผู้ใช้งาน" class="p-inputtext-sm" pInputText formControlName="username">
+        <input type="text" placeholder="ชื่อสามัญ/ชื่อทางการค้า" class="p-inputtext-sm" pInputText
+          formControlName="name">
       </div>
     </div>
 
     <div class="grid mb-3">
       <div class="col-12 -mb-2">
-        <label class="required"> รหัสผ่าน </label>
+        <label class="required"> กลุ่มยา </label>
       </div>
       <div class="col-12">
-        <input type="password" placeholder="รหัสผ่าน" class="p-inputtext-sm" pInputText formControlName="password">
+        <input type="text" placeholder="กลุ่มยา" class="p-inputtext-sm" pInputText formControlName="drugGroup">
+      </div>
+    </div>
+
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label class="required"> ขนาด/ปริมาณ </label>
+      </div>
+      <div class="col-12">
+        <input type="text" placeholder="ขนาด/ปริมาณ" class="p-inputtext-sm" pInputText formControlName="dosage">
+      </div>
+    </div>
+
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label> คำอธิบาย </label>
+      </div>
+      <div class="col-12">
+        <textarea rows="5" pInputTextarea formControlName="description"></textarea>
+      </div>
+    </div>
+
+    <div class="grid mb-3">
+      <div class="col-12 -mb-2">
+        <label class="required"> รูปภาพ </label>
+      </div>
+      <div class="col-12">
+        <input type="text" placeholder="ชื่อข่าวสาร/ประชาสัมพันธ์" class="p-inputtext-sm mb-2" pInputText
+          formControlName="img">
+        <p-fileUpload #fileUploader mode="basic" chooseIcon="pi pi-upload" name="demo[]"
+          accept="image/png,image/jpeg,image/gif,application/pdf" [chooseLabel]="'อัพโหลดไฟล์'" [auto]="true"
+          [maxFileSize]="10000000" [multiple]="false" [customUpload]="true" (uploadHandler)="onUpload($event)">
+        </p-fileUpload>
       </div>
     </div>
 
@@ -63,29 +100,48 @@
 </p-dialog>
 
 <p-dialog header="ยา" [(visible)]="visibleEditDrug" [style]="{width: '50vw'}" (visibleChange)="resetForm()">
+  <img src="{{selectedDrug.img}}" class="w-full" height="400">
+
   <div class="grid mb-3">
     <div class="col-12 -mb-2">
-      <label class="required"> ชื่อผู้ใช้งาน </label>
+      <label class="required"> ชื่อสามัญ/ชื่อทางการค้า </label>
     </div>
     <div class="col-12">
-      <input type="text" placeholder="ชื่อผู้ใช้งาน" class="p-inputtext-sm" pInputText
-        [(ngModel)]="selectedDrug.username">
+      <input type="text" placeholder="ชื่อสามัญ/ชื่อทางการค้า" class="p-inputtext-sm" pInputText
+        [(ngModel)]="selectedDrug.name">
     </div>
   </div>
 
   <div class="grid mb-3">
     <div class="col-12 -mb-2">
-      <label class="required"> รหัสผ่าน </label>
+      <label class="required"> กลุ่มยา </label>
     </div>
     <div class="col-12">
-      <input type="password" placeholder="รหัสผ่าน" class="p-inputtext-sm" pInputText
-        [(ngModel)]="selectedDrug.password">
+      <input type="text" placeholder="กลุ่มยา" class="p-inputtext-sm" pInputText [(ngModel)]="selectedDrug.drugGroup">
+    </div>
+  </div>
+
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label class="required"> ขนาด/ปริมาณ </label>
+    </div>
+    <div class="col-12">
+      <input type="text" placeholder="ขนาด/ปริมาณ" class="p-inputtext-sm" pInputText [(ngModel)]="selectedDrug.dosage">
+    </div>
+  </div>
+
+  <div class="grid mb-3">
+    <div class="col-12 -mb-2">
+      <label> คำอธิบาย </label>
+    </div>
+    <div class="col-12">
+      <textarea rows="5" pInputTextarea [(ngModel)]="selectedDrug.description"></textarea>
     </div>
   </div>
 
   <p-divider></p-divider>
   <div class="flex justify-content-end">
-    <button pButton class="p-button-success p-button-sm w-full" icon="pi pi-save" label="อัพเดทข้อมูล"
+    <button pButton class="p-button-success p-button-sm w-full" icon="pi pi-save" label="อัพเดต"
       (click)="updateDrug()"></button>
   </div>
 </p-dialog>
