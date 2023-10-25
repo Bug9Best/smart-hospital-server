@@ -8,6 +8,7 @@ import { APP_PIPE } from '@nestjs/core';
 import { EventModule } from './event/event.module';
 import { AppointmentModule } from './appointment/appointment.module';
 import { QueueModule } from './queue/queue.module';
+import { DrugModule } from './drug/drug.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { QueueModule } from './queue/queue.module';
     EventModule,
     AppointmentModule,
     QueueModule,
+    DrugModule,
   ],
   controllers: [],
   providers: [
