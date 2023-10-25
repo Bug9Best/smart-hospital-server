@@ -1,26 +1,104 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateDrugDto } from './dto/create-drug.dto';
 import { UpdateDrugDto } from './dto/update-drug.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class DrugService {
-  create(createDrugDto: CreateDrugDto) {
-    return 'This action adds a new drug';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async findByDrugName(drugName: string): Promise<any> {
+    return await this.prisma.drugDisplay.findMany({
+      where: {
+        name: drugName,
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all drug`;
+  async findByDrugId(drugId: number): Promise<any> {
+    return await this.prisma.drugDisplay.findUnique({
+      where: {
+        id: drugId,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} drug`;
+  async getAll(): Promise<any> {
+    return await this.prisma.drugDisplay.findMany();
   }
 
-  update(id: number, updateDrugDto: UpdateDrugDto) {
-    return `This action updates a #${id} drug`;
+  async findDetail(drugId: number): Promise<any> {
+    const isDrugExist = await this.findByDrugId(drugId);
+
+    if (!isDrugExist) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'ไม่พบข้อมูลยา',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return await this.prisma.drugDisplay.findUnique({
+      where: {
+        id: drugId,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} drug`;
+  async create(data: CreateDrugDto): Promise<void> {
+    const isDrugExist = await this.findByDrugName(data.name);
+
+    if (isDrugExist) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'มีชื่อยานี้อยู่แล้ว',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    await this.prisma.drugDisplay.create({
+      data,
+    });
+  }
+
+  async update(id: number, data: UpdateDrugDto): Promise<void> {
+    const isDrugExist = await this.findByDrugId(id);
+
+    if (!isDrugExist) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'ไม่พบข้อมูลยา',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    await this.prisma.drugDisplay.update({
+      where: { id: id },
+      data: data,
+    });
+  }
+
+  async delete(id: number): Promise<void> {
+    const isDrugExist = await this.findByDrugId(id);
+
+    if (!isDrugExist) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'ไม่พบข้อมูลยา',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    await this.prisma.drugDisplay.delete({
+      where: { id: id },
+    });
   }
 }

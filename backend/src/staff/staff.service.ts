@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateStaffDto } from './dto/create-staff.dto';
 import { Staff as StaffModel } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class StaffService {
@@ -34,8 +35,15 @@ export class StaffService {
       throw new HttpException('Staff already exist', HttpStatus.BAD_REQUEST);
     }
 
+    const { password, ...rest } = data;
+
+    const hashPassword = await bcrypt.hash(password, 10);
+
     await this.prisma.staff.create({
-      data,
+      data: {
+        ...rest,
+        password: hashPassword,
+      },
     });
   }
 }

@@ -10,11 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum StaffRole {
-  STAFF
-  DOCTOR
-}
-
 enum DoctorBranch {
   ORTHOPEDICS // ออร์โธปิดิกส์
   PSYCHIATRIST // จิตเวช
@@ -34,8 +29,6 @@ model Staff {
   staffId  String @id @default(uuid())
   username String @unique
   password String
-
-  role StaffRole
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -134,7 +127,7 @@ model Queue {
 //for display only
 model DrugDisplay {
   id          Int      @id @default(autoincrement())
-  name        String?
+  name        String   @unique
   drugGroup   String
   dosage      String
   description String?

@@ -12,6 +12,11 @@ export class UsersController {
     return this.usersService.getAll();
   }
 
+  @Get(':userId')
+  getUserDetails(userId: string): Promise<any> {
+    return this.usersService.getUserDetails(userId);
+  }
+
   @Get(':userId/appointments')
   getAppointmentsByUserId(userId: string): Promise<any> {
     return this.usersService.getAppointmentsByUserId(userId);

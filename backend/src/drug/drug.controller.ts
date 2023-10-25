@@ -10,33 +10,38 @@ import {
 import { DrugService } from './drug.service';
 import { CreateDrugDto } from './dto/create-drug.dto';
 import { UpdateDrugDto } from './dto/update-drug.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('drug')
 @Controller('drug')
 export class DrugController {
   constructor(private readonly drugService: DrugService) {}
+
+  @Get()
+  getAll() {
+    return this.drugService.getAll();
+  }
+
+  @Get(':drugId')
+  getById(@Param('drugId') drugId: number) {
+    return this.drugService.findByDrugId(Number(drugId));
+  }
 
   @Post()
   create(@Body() createDrugDto: CreateDrugDto) {
     return this.drugService.create(createDrugDto);
   }
 
-  @Get()
-  findAll() {
-    return this.drugService.findAll();
+  @Patch(':drugId')
+  update(
+    @Param('drugId') drugId: number,
+    @Body() updateDrugDto: UpdateDrugDto,
+  ) {
+    return this.drugService.update(Number(drugId), updateDrugDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.drugService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDrugDto: UpdateDrugDto) {
-    return this.drugService.update(+id, updateDrugDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.drugService.remove(+id);
+  @Delete(':drugId')
+  remove(@Param('drugId') drugId: number) {
+    return this.drugService.delete(Number(drugId));
   }
 }

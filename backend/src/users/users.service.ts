@@ -31,6 +31,21 @@ export class UsersService {
     return await this.prisma.user.findMany();
   }
 
+  async getUserDetails(userId: string): Promise<any> {
+    const isUserExist = await this.findByUserId(userId);
+
+    if (!isUserExist) {
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+    }
+
+    return this.prisma.user.findUnique({
+      where: { userId },
+      include: {
+        PatientRecord: true,
+      },
+    });
+  }
+
   async createUser(data: CreatUserDto): Promise<Users> {
     const { citizenId, password, ...patientRecord } = data;
 
