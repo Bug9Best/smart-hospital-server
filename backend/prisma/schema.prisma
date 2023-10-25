@@ -30,7 +30,6 @@ enum Status {
 }
 
 //user
-
 model Staff {
   staffId  String @id @default(uuid())
   username String @unique
@@ -43,26 +42,20 @@ model Staff {
 
   //staff
   MyEvent Event[]
-
-  //doctor
-  Appointmented Appointment[]
-  DoctorAccount DoctorAccount?
 }
 
-model DoctorAccount {
-  staffId   String  @id
+model Doctor {
+  id        String       @id @default(uuid())
   prefix    String
   firstName String
   lastName  String
   img       String?
   position  String
+  branch    DoctorBranch
 
-  branch DoctorBranch
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  staff Staff @relation(fields: [staffId], references: [staffId])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Appointment Appointment[]
 }
 
 model Event {
@@ -79,7 +72,6 @@ model Event {
 }
 
 //user
-
 model User {
   userId    String @id @default(uuid())
   citizenId String @unique
@@ -123,14 +115,14 @@ model Appointment {
   Record PatientRecord? @relation(fields: [userId], references: [userId])
   userId String
 
-  Doctor   Staff? @relation(fields: [doctorId], references: [staffId])
+  Doctor   Doctor? @relation(fields: [doctorId], references: [id])
   doctorId String
 }
 
 model Queue {
-  id     Int         @id @default(autoincrement())
+  id     Int      @id @default(autoincrement())
   date   DateTime
-  status Status @default(WAITING)
+  status Status   @default(WAITING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -142,24 +134,13 @@ model Queue {
 //for display only
 model DrugDisplay {
   id          Int      @id @default(autoincrement())
-  nameTh      String?
-  nameEn      String
+  name        String?
   drugGroup   String
   dosage      String
   description String?
   img         String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-}
-
-model StaffDisplay {
-  id        Int      @id @default(autoincrement())
-  name      String
-  img       String?
-  position  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  president Boolean  @default(false)
 }
 
 model FormDisplay {
