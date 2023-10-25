@@ -77,7 +77,6 @@ export class EventComponent implements OnInit {
   onUpload(event: any) {
     const file = event.files[0];
     if (file) {
-      console.log(file);
       this.storage.upload('/event/' + file.name, file).then(() => {
         this.storage.ref('/event/' + file.name).getDownloadURL().subscribe((url) => {
           this.formData.controls['img'].setValue(url);
