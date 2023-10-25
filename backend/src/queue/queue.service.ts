@@ -19,4 +19,13 @@ export class QueueService {
       },
     });
   }
+
+  async findQueueByUserId(userId: string): Promise<any> {
+    return await this.prisma.queue.findMany({
+      where: { userId },
+      include: {
+        Record: true,
+      },
+    });
+  }
 }
