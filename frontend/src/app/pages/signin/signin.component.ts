@@ -28,7 +28,7 @@ export class SigninComponent {
     this.authService.loginStaff(values).subscribe({
       next: (response: any) => {
         localStorage.setItem('user', JSON.stringify(response));
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/staff']);
       },
       error: (error: any) => {
         this.messageService.add({

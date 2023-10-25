@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: AppLayoutComponent,
     children: [
-      { path: '', redirectTo: 'profile', pathMatch: 'full' },
+      { path: '', redirectTo: 'staff', pathMatch: 'full' },
       {
         path: 'staff',
         loadChildren: () => import('./pages/staff/staff.module').then(m => m.StaffModule)
