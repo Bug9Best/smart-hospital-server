@@ -82,4 +82,13 @@ export class AppointmentService {
       },
     });
   }
+
+  async findByUserId(userId: string): Promise<Appointment[]> {
+    return this.prisma.appointment.findMany({
+      where: { userId },
+      include: {
+        Doctor: true,
+      },
+    });
+  }
 }

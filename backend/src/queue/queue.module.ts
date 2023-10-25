@@ -6,5 +6,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Module({
   controllers: [QueueController],
   providers: [QueueService, PrismaService],
+  exports: [QueueService],
 })
 export class QueueModule {}

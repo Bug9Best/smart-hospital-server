@@ -10,26 +10,37 @@ export class DoctorService {
     private readonly staffService: StaffService,
   ) {}
 
-  async createDoctor(data: CreateDoctorDto): Promise<void> {
-    const isStaffExist = await this.staffService.findByUsername(data.username);
+  async getAll(): Promise<any> {
+    return await this.prisma.doctor.findMany();
+  }
 
-    if (isStaffExist) {
-      throw new HttpException('Staff already exist', HttpStatus.BAD_REQUEST);
+  async createDoctor(data: CreateDoctorDto): Promise<void> {
+    await this.prisma.doctor.create({
+      data: data,
+    });
+  }
+
+  async updateDoctor(id: string, data: CreateDoctorDto): Promise<void> {
+    await this.prisma.doctor.update({
+      where: { id: id },
+      data: data,
+    });
+  }
+
+  async deleteDoctor(id: string): Promise<void> {
+    const isExist = await this.staffService.findById(id);
+    if (!isExist) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'ไม่พบข้อมูลหมอ',
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
 
-    const { username, password, role, ...staffData } = data;
-
-    data.role = 'DOCTOR';
-
-    await this.prisma.staff.create({
-      data: {
-        username,
-        password,
-        role,
-        DoctorAccount: {
-          create: staffData,
-        },
-      },
+    await this.prisma.doctor.delete({
+      where: { id: id },
     });
   }
 }

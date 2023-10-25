@@ -2,10 +2,16 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatUserDto } from './dto/create-user.dto';
 import { Users } from './dto/user.dto';
+import { AppointmentService } from 'src/appointment/appointment.service';
+import { QueueService } from 'src/queue/queue.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly appointmentService: AppointmentService,
+    private readonly queueService: QueueService,
+  ) {}
 
   async findByCitizenId(citizenId: string, option?: any): Promise<Users> {
     return await this.prisma.user.findUnique({
@@ -21,13 +27,17 @@ export class UsersService {
     });
   }
 
+  async getAll(): Promise<Users[]> {
+    return await this.prisma.user.findMany();
+  }
+
   async createUser(data: CreatUserDto): Promise<Users> {
     const { citizenId, password, ...patientRecord } = data;
 
     const isUserExist = await this.findByCitizenId(citizenId);
 
     if (isUserExist) {
-      throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
+      throw new HttpException('มีผู้ใช้งานอยู่แล้ว', HttpStatus.BAD_REQUEST);
     }
 
     const createUser = await this.prisma.user.create({
@@ -63,5 +73,25 @@ export class UsersService {
       data: { address },
       include: { User: true },
     });
+  }
+
+  async getAppointmentsByUserId(userId: string): Promise<any> {
+    const isUserExist = await this.findByUserId(userId);
+
+    if (!isUserExist) {
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+    }
+
+    return this.appointmentService.findByUserId(userId);
+  }
+
+  async getQueuesByUserId(userId: string): Promise<any> {
+    const isUserExist = await this.findByUserId(userId);
+
+    if (!isUserExist) {
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+    }
+
+    return this.queueService.findQueueByUserId(userId);
   }
 }
