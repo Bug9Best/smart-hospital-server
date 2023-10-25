@@ -13,6 +13,9 @@ import { AppLayoutModule } from './layout/layout.module';
 import { PageHeaderComponent } from './component/page-header/page-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoDatalistComponent } from './component/no-datalist/no-datalist.component';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from './environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { NoDatalistComponent } from './component/no-datalist/no-datalist.compone
     PrimeNGModule,
     AppLayoutModule,
     PageHeaderComponent,
-    NoDatalistComponent
+    NoDatalistComponent,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
   ],
   providers: [
     MessageService,

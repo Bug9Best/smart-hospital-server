@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { DoctorService } from 'src/app/services/doctor/doctor.service';
 
 @Component({
   selector: 'app-doctor',
   templateUrl: './doctor.component.html',
   styleUrls: ['./doctor.component.scss']
 })
-export class DoctorComponent {
+export class DoctorComponent implements OnInit {
 
-  listDoctor: any = [1];
+  listDoctor: any = [];
   visibleCreateDortor: boolean = false;
 
   formData: FormGroup = new FormGroup({
@@ -23,7 +24,20 @@ export class DoctorComponent {
 
   constructor(
     private messageService: MessageService,
+    private doctorService: DoctorService
   ) {
+  }
+
+  ngOnInit(): void {
+    this.getDoctor();
+  }
+
+  getDoctor() {
+    this.doctorService
+      .getAll()
+      .subscribe((res) => {
+        this.listDoctor = res
+      });
   }
 
   showDialog(severity: string, summary: string, detail: string) {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { EventService } from 'src/app/services/event/event.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+
 
 @Component({
   selector: 'app-news',
@@ -26,7 +28,8 @@ export class EventComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private storage: AngularFireStorage,
   ) {
   }
 
@@ -72,7 +75,15 @@ export class EventComponent implements OnInit {
   }
 
   onUpload(event: any) {
-    console.log(event);
+    const file = event.files[0];
+    if (file) {
+      console.log(file);
+      this.storage.upload('/event/' + file.name, file).then(() => {
+        this.storage.ref('/event/' + file.name).getDownloadURL().subscribe((url) => {
+          this.formData.controls['img'].setValue(url);
+        });
+      });
+    }
   }
 
   createEvent() {
