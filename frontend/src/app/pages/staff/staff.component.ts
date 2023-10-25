@@ -18,7 +18,6 @@ export class StaffComponent {
   formData: FormGroup = new FormGroup({
     username: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required]),
-    role: new FormControl("STAFF", [Validators.required]),
   });
 
   constructor(
@@ -63,10 +62,15 @@ export class StaffComponent {
 
   createUser() {
     let data = this.formData.value;
-    this.staffService.create(data).subscribe((res: any) => {
-      this.showDialog('success', 'สำเร็จ!', 'เพิ่มผู้ใช้งานสำเร็จ');
-      this.resetForm();
-      this.getStaff();
+    this.staffService.create(data).subscribe({
+      next: (res: any) => {
+        this.showDialog('success', 'สำเร็จ!', 'เพิ่มผู้ใช้งานสำเร็จ');
+        this.resetForm();
+        this.getStaff();
+      },
+      error: (err: any) => {
+        this.showDialog('error', 'ไม่สำเร็จ!', err.error.message);
+      }
     });
   }
 
@@ -79,17 +83,17 @@ export class StaffComponent {
       acceptLabel: 'ยืนยัน',
       rejectLabel: 'ยกเลิก',
       accept: () => {
-        this.staffService.update(data).subscribe((res: any) => {
+        this.staffService.update(data.staffId, data).subscribe((res: any) => {
           this.showDialog('success', 'สำเร็จ!', 'แก้ไขผู้ใช้งานสำเร็จ');
           this.visibleEditUser = false;
           this.getStaff();
         });
       }
     });
-
   }
 
   deleteItem(value: any) {
+    console.log(value);
     this.confirmationService.confirm({
       header: 'ยืนยันการลบผู้ใช้งาน',
       icon: 'pi pi-exclamation-triangle',
@@ -97,10 +101,10 @@ export class StaffComponent {
       acceptLabel: 'ยืนยัน',
       rejectLabel: 'ยกเลิก',
       accept: () => {
-        // this.staffService.delete(value.id).subscribe((res: any) => {
-        //   this.showDialog('success', 'สำเร็จ!', 'ลบผู้ใช้งานสำเร็จ');
-        //   this.getStaff();
-        // });
+        this.staffService.delete(value.staffId).subscribe((res: any) => {
+          this.showDialog('success', 'สำเร็จ!', 'ลบผู้ใช้งานสำเร็จ');
+          this.getStaff();
+        });
       }
     });
 

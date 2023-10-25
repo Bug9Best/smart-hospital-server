@@ -27,10 +27,8 @@ export class SigninComponent {
     let values = this.formData.value;
     this.authService.loginStaff(values).subscribe({
       next: (response: any) => {
-        if (response.role == "STAFF") {
-          localStorage.setItem('user', JSON.stringify(response));
-          this.router.navigate(['/profile']);
-        }
+        localStorage.setItem('user', JSON.stringify(response));
+        this.router.navigate(['/profile']);
       },
       error: (error: any) => {
         this.messageService.add({
