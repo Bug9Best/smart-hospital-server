@@ -71,8 +71,6 @@ export class UsersService {
 
     const hnNumber = await this.generateHnNumber(citizenId);
 
-    if (!hnNumber) throw new HttpException('Error', HttpStatus.BAD_REQUEST);
-
     const isHnNumberExist = await this.prisma.patientRecord.findUnique({
       where: { hnNumber: hnNumber },
     });
