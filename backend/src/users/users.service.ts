@@ -11,7 +11,7 @@ export class UsersService {
     private readonly prisma: PrismaService,
     private readonly appointmentService: AppointmentService,
     private readonly queueService: QueueService,
-  ) { }
+  ) {}
 
   async findByCitizenId(citizenId: string, option?: any): Promise<Users> {
     return await this.prisma.user.findUnique({
@@ -55,6 +55,20 @@ export class UsersService {
       throw new HttpException('มีผู้ใช้งานอยู่แล้ว', HttpStatus.BAD_REQUEST);
     }
 
+    const hnNumber = (
+      Number(new Date().getFullYear().toString().slice(2, 4)) +
+      43 +
+      citizenId.slice(8, 12)
+    ).toString();
+
+    const isHnNumberExist = await this.prisma.patientRecord.findUnique({
+      where: { hnNumber: hnNumber },
+    });
+
+    if (isHnNumberExist.hnNumber) {
+      throw new HttpException('มีเลขรหัส HN อยู่แล้ว', HttpStatus.BAD_REQUEST);
+    }
+
     const createUser = await this.prisma.user.create({
       data: {
         citizenId,
@@ -64,9 +78,6 @@ export class UsersService {
         },
       },
     });
-
-    const hnNumber =
-      (parseInt(new Date().getFullYear().toString().slice(2, 4)) + 43) + createUser.citizenId.slice(8, 12);
 
     await this.prisma.patientRecord.update({
       where: { userId: createUser.userId },
