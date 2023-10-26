@@ -4,6 +4,7 @@ import { CreatUserDto } from './dto/create-user.dto';
 import { Users } from './dto/user.dto';
 import { AppointmentService } from 'src/appointment/appointment.service';
 import { QueueService } from 'src/queue/queue.service';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -11,7 +12,7 @@ export class UsersService {
     private readonly prisma: PrismaService,
     private readonly appointmentService: AppointmentService,
     private readonly queueService: QueueService,
-  ) { }
+  ) {}
 
   async findByCitizenId(citizenId: string, option?: any): Promise<Users> {
     return await this.prisma.user.findUnique({
@@ -66,7 +67,7 @@ export class UsersService {
     const isUserExist = await this.findByCitizenId(citizenId);
 
     if (isUserExist) {
-      console.log("user", isUserExist);
+      console.log('user', isUserExist);
       throw new HttpException('มีผู้ใช้งานอยู่แล้ว', HttpStatus.BAD_REQUEST);
     }
 
@@ -77,7 +78,7 @@ export class UsersService {
     });
 
     if (isHnNumberExist) {
-      console.log("hn", isHnNumberExist);
+      console.log('hn', isHnNumberExist);
       throw new HttpException('มีเลขรหัส HN อยู่แล้ว', HttpStatus.BAD_REQUEST);
     }
 
@@ -94,7 +95,7 @@ export class UsersService {
     return createUser;
   }
 
-  async updateAddress(userId: string, address: string): Promise<void> {
+  async updateUser(userId: string, data: UpdateUserDto): Promise<void> {
     const isUserExist = await this.findByUserId(userId);
 
     if (!isUserExist) {
@@ -103,7 +104,7 @@ export class UsersService {
 
     await this.prisma.patientRecord.update({
       where: { userId },
-      data: { address },
+      data: data,
       include: { User: true },
     });
   }

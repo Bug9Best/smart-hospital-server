@@ -17,14 +17,26 @@ export class QueueService {
       include: {
         Record: true,
       },
+      orderBy: {
+        date: 'asc',
+      },
     });
   }
 
   async findQueueByUserId(userId: string): Promise<any> {
     return await this.prisma.queue.findMany({
-      where: { userId },
+      where: {
+        userId,
+        status: 'WAITING',
+        date: {
+          gte: new Date().toISOString().slice(0, 10),
+        },
+      },
       include: {
         Record: true,
+      },
+      orderBy: {
+        date: 'desc',
       },
     });
   }

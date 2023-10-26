@@ -89,6 +89,9 @@ export class AppointmentService {
       include: {
         Doctor: true,
       },
+      orderBy: {
+        date: 'desc',
+      },
     });
   }
 }
