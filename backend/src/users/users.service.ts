@@ -41,9 +41,23 @@ export class UsersService {
     return this.prisma.user.findUnique({
       where: { userId },
       include: {
-        PatientRecord: true,
+        PatientRecord: {
+          include: {
+            Appointment: true,
+            Qeue: true,
+          },
+        },
       },
     });
+  }
+
+  async generateHnNumber(citizenId: string): Promise<string> {
+    const hnNumber =
+      new Date().getFullYear().toString().slice(2, 4) +
+      43 +
+      citizenId.slice(8, 12);
+
+    return hnNumber;
   }
 
   async createUser(data: CreatUserDto): Promise<Users> {
@@ -55,17 +69,15 @@ export class UsersService {
       throw new HttpException('มีผู้ใช้งานอยู่แล้ว', HttpStatus.BAD_REQUEST);
     }
 
-    const hnNumber = (
-      Number(new Date().getFullYear().toString().slice(2, 4)) +
-      43 +
-      citizenId.slice(8, 12)
-    ).toString();
+    const hnNumber = await this.generateHnNumber(citizenId);
+
+    if (!hnNumber) throw new HttpException('Error', HttpStatus.BAD_REQUEST);
 
     const isHnNumberExist = await this.prisma.patientRecord.findUnique({
       where: { hnNumber: hnNumber },
     });
 
-    if (isHnNumberExist.hnNumber) {
+    if (isHnNumberExist) {
       throw new HttpException('มีเลขรหัส HN อยู่แล้ว', HttpStatus.BAD_REQUEST);
     }
 
@@ -74,14 +86,9 @@ export class UsersService {
         citizenId,
         password,
         PatientRecord: {
-          create: { ...patientRecord, hnNumber: '' },
+          create: { ...patientRecord, hnNumber: hnNumber },
         },
       },
-    });
-
-    await this.prisma.patientRecord.update({
-      where: { userId: createUser.userId },
-      data: { hnNumber },
     });
 
     return createUser;

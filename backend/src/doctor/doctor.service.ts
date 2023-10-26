@@ -8,7 +8,7 @@ export class DoctorService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly staffService: StaffService,
-  ) { }
+  ) {}
 
   async getAll(): Promise<any> {
     return await this.prisma.doctor.findMany();
