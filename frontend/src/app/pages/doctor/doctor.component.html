@@ -2,8 +2,8 @@
   <page-header [title]="'แพทย์/บุคลากร'" [label]="'เพิ่มแพทย์/บุคลากร'" (onClickButton)="openCreate()">
   </page-header>
   <ng-container *ngIf="listDoctor.length; else noData">
-    <ng-container *ngFor="let item of listDoctor">
-      <div class="grid-custom p-2">
+    <div class="grid-custom p-2">
+      <ng-container *ngFor="let item of listDoctor">
         <div class="col-4 w-full px-5">
           <div class="shadow-2 border-round-lg cursor-pointer">
             <div>
@@ -13,8 +13,9 @@
             <div class="flex flex-column px-3 pb-2 mt-2">
               <div class="text-center text-xl font-bold">{{ item.prefix + item.firstName + " " + item.lastName}}</div>
               <div class="text-center text-lg text-gray-500"> {{ item.position || "" }}</div>
+              <div class="text-center text-lg text-gray-500"> {{ item.branch || "" }}</div>
               <p-divider></p-divider>
-              <div class="flex justify-content-center w-full">
+              <div class="flex justify-content-center">
                 <button pButton class="p-button-sm p-button-text p-button-secondary text-gray-500" icon="pi pi-pencil"
                   (click)="openDetail(item)"></button>
                 <button pButton class="p-button-sm p-button-text p-button-secondary text-gray-500" icon="pi pi-trash"
@@ -23,8 +24,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
+    </div>
   </ng-container>
   <ng-template #noData>
     <no-datalist [message]="'ข่าวสาร'" [buttonLabel]="'เพิ่มข่าวสาร/ประชาสัมพันธ์'"></no-datalist>
