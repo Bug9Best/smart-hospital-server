@@ -11,7 +11,7 @@ export class UsersService {
     private readonly prisma: PrismaService,
     private readonly appointmentService: AppointmentService,
     private readonly queueService: QueueService,
-  ) {}
+  ) { }
 
   async findByCitizenId(citizenId: string, option?: any): Promise<Users> {
     return await this.prisma.user.findUnique({
@@ -66,7 +66,7 @@ export class UsersService {
     });
 
     const hnNumber =
-      new Date().getFullYear().toString().slice(2, 4) + createUser.userId;
+      (parseInt(new Date().getFullYear().toString().slice(2, 4)) + 43) + createUser.citizenId.slice(8, 12);
 
     await this.prisma.patientRecord.update({
       where: { userId: createUser.userId },
