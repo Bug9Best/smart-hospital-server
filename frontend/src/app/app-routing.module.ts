@@ -11,8 +11,20 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'staff', pathMatch: 'full' },
       {
-        path: 'staff',
-        loadChildren: () => import('./pages/staff/staff.module').then(m => m.StaffModule)
+        path: 'reserve',
+        loadChildren: () => import('./pages/reserve/reserve.module').then(m => m.ReserveModule)
+      },
+      {
+        path: 'queue',
+        loadChildren: () => import('./pages/queue/queue.module').then(m => m.QueueModule)
+      },
+      {
+        path: 'event',
+        loadChildren: () => import('./pages/event/event.module').then(m => m.EventModule)
+      },
+      {
+        path: 'chat',
+        loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatModule)
       },
       {
         path: 'doctor',
@@ -21,10 +33,6 @@ const routes: Routes = [
       {
         path: 'staff',
         loadChildren: () => import('./pages/staff/staff.module').then(m => m.StaffModule)
-      },
-      {
-        path: 'event',
-        loadChildren: () => import('./pages/event/event.module').then(m => m.EventModule)
       },
       {
         path: 'drug',

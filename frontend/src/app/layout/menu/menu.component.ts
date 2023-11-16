@@ -19,7 +19,7 @@ export class AppMenuComponent implements OnInit {
                 style: 'font-size: 20px',
                 items: [
                     {
-                        label: 'จองออนไลน์รับบริการ',
+                        label: 'นัดหมายออนไลน์',
                         icon: 'pi pi-calendar',
                         routerLink: ['/reserve']
                     },
