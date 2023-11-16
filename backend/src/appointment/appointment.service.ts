@@ -8,22 +8,21 @@ export class AppointmentService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateAppointmentDto): Promise<Appointment> {
-    const isAppointmentExist = await this.prisma.appointment.findMany({
-      where: {
-        AND: [
-          { doctorId: data.doctorId },
-          { userId: data.pateintId },
-          { date: data.date },
-        ],
-      },
-    });
+    // const isAppointmentExist = await this.prisma.appointment.findMany({
+    //   where: {
+    //     AND: [
+    //       { doctorId: data.doctorId },
+    //       { userId: data.pateintId },
+    //     ],
+    //   },
+    // });
 
-    if (isAppointmentExist) {
-      throw new HttpException(
-        'Appointment already exist',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+    // if (isAppointmentExist) {
+    //   throw new HttpException(
+    //     'Appointment already exist',
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // }
 
     const { pateintId, doctorId, ...rest } = data;
     return this.prisma.appointment.create({

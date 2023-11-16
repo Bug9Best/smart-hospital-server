@@ -17,6 +17,10 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from './environments/environment';
 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CorsInterceptor } from './services/http-interceptor';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +43,11 @@ import { environment } from './environments/environment';
   providers: [
     MessageService,
     ConfirmationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CorsInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

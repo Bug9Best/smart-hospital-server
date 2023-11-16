@@ -9,6 +9,7 @@ import { EventModule } from './event/event.module';
 import { AppointmentModule } from './appointment/appointment.module';
 import { QueueModule } from './queue/queue.module';
 import { DrugModule } from './drug/drug.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { DrugModule } from './drug/drug.module';
     AppointmentModule,
     QueueModule,
     DrugModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [
