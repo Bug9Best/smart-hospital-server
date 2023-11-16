@@ -19,6 +19,32 @@ export class AppMenuComponent implements OnInit {
                 style: 'font-size: 20px',
                 items: [
                     {
+                        label: 'จองออนไลน์รับบริการ',
+                        icon: 'pi pi-calendar',
+                        routerLink: ['/reserve']
+                    },
+                    {
+                        label: 'คิวรับบริการ',
+                        icon: 'pi pi-users',
+                        routerLink: ['/queue']
+                    },
+                    {
+                        label: 'ข่าวสาร/ประชาสัมพันธ์',
+                        icon: 'pi pi-fw pi-copy',
+                        routerLink: ['/event']
+                    },
+                    {
+                        label: 'การสนทนา',
+                        icon: 'pi pi-comments',
+                        routerLink: ['/chat']
+                    },
+                ]
+            },
+            {
+                label: 'ตั้งค่า',
+                style: 'font-size: 20px',
+                items: [
+                    {
                         label: 'ผู้ใช้งาน',
                         icon: 'pi pi-user',
                         routerLink: ['/staff']
@@ -32,11 +58,6 @@ export class AppMenuComponent implements OnInit {
                         label: 'ข้อมูลยา',
                         icon: 'pi pi-info-circle',
                         routerLink: ['/drug']
-                    },
-                    {
-                        label: 'ข่าวสาร/ประชาสัมพันธ์',
-                        icon: 'pi pi-fw pi-copy',
-                        routerLink: ['/event']
                     },
                 ]
             },
