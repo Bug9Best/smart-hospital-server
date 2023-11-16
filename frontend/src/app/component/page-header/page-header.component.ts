@@ -16,6 +16,7 @@ export class PageHeaderComponent {
 
   @Input() title: string = '';
   @Input() label: string = '';
+  @Input() showButton: boolean = true;
   @Output() onClickButton = new EventEmitter();
 
   onClick() {

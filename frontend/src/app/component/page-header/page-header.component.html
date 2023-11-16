@@ -2,7 +2,9 @@
   <div class="flex align-items-center justify-content-between">
     <div class="text-2xl font-bold">{{ title }}</div>
     <div>
-      <button pButton class="p-button-sm p-button-success p-button-outlined" [label]="label" (click)="onClick()"></button>
+      <ng-container *ngIf="showButton">
+        <button pButton class="p-button-sm p-button-success p-button-outlined" [label]="label" (click)="onClick()"></button>
+      </ng-container>
     </div>
   </div>
   <p-divider></p-divider>
