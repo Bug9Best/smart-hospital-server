@@ -7,7 +7,7 @@
         <div class="flex justify-content-between">
           <div class="text-lg font-bold">{{ item.Record.firstName }} {{ item.Record.lastName }}</div>
           <div class="">
-            <p-tag [severity]="getSeverity(item.status)" [value]="item.status"></p-tag>
+            <p-tag [severity]="getSeverity(item.status)" [value]="getValue(item.status)"></p-tag>
           </div>
         </div>
         <div>

@@ -7,7 +7,7 @@ import { BaseService } from '../base.service';
 export class AppointmentService extends BaseService {
   public override path: string = "appointment";
 
-  updateAppointment(id: number, status: any) {
+  updateAppointment(id: string, status: string) {
     return this.http.patch(`${this.getBaseUrl}/${id}?status=${status}`, {});
   }
 

@@ -30,15 +30,27 @@ export class ReserveComponent implements OnInit {
     this.router.navigate(['/reserve/detail', item.id]);
   }
 
-  getSeverity(item: any) {
-    if (item.severity === 'WAITING') {
+  getSeverity(status: any) {
+    if (status === 'WAITING') {
       return 'info';
     }
-    else if (item.severity === 'DONE') {
+    else if (status === 'DONE') {
       return 'success';
     }
     else {
-      return 'bg-danger';
+      return 'danger';
+    }
+  }
+
+  getValue(status: any) {
+    if (status === 'WAITING') {
+      return 'รอการนัดหมาย';
+    }
+    else if (status === 'DONE') {
+      return 'เสร็จสิ้น';
+    }
+    else {
+      return 'ยกเลิกการนัดหมาย';
     }
   }
 }
