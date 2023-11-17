@@ -8,14 +8,15 @@
       </div>
       <ng-container *ngFor="let item of listConversation">
         <div class="shadow-2 border-round-md p-3 mb-2 mx-2 cursor-pointer" (click)="selectConversation(item)">
-          {{ item }}
+          {{ item.userId[0] }}
         </div>
       </ng-container>
     </div>
     <div class="flex col-12 span-2 h-full">
       <p-divider layout="vertical" class="-ml-4"></p-divider>
       <div class="w-full h-full">
-        <chat-message [selectedConversation]="selectedConversation"></chat-message>
+        <chat-message [selectedConversation]="selectedConversation"
+          [listMessages]="listConversation[0].message" (onSend)="getConversation()"></chat-message>
       </div>
     </div>
   </div>

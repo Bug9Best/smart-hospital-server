@@ -75,6 +75,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   PatientRecord PatientRecord?
+  Message       Message[]
 }
 
 model PatientRecord {
@@ -93,6 +94,7 @@ model PatientRecord {
 
   Appointment Appointment[]
   Qeue        Queue[]
+  Message     Message[]
 }
 
 model Appointment {
@@ -155,12 +157,15 @@ model Conversations {
 }
 
 model Message {
-  id             String        @id @default(uuid())
+  id             String         @id @default(uuid())
   content        String
   receiverId     String
   senderId       String
-  conversations  Conversations @relation(fields: [conversationId], references: [id])
+  Receiver       PatientRecord? @relation(fields: [senderId], references: [userId])
+  conversations  Conversations  @relation(fields: [conversationId], references: [id])
   conversationId String
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  User           User?          @relation(fields: [userUserId], references: [userId])
+  userUserId     String?
 }

@@ -36,7 +36,7 @@ export class ChatComponent implements OnInit {
           return receiver.receiverId;
         });
       });
-        
+
       console.log(res);
     })
   }

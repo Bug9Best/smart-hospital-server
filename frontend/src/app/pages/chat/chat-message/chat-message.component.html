@@ -2,22 +2,28 @@
   <ng-container *ngIf="selectedConversation;else notSelect">
     <div class="flex flex-column h-full">
       <div class="h-full overflow-y-scroll">
-        <div class="flex mb-2">
-          <div class="w-max  shadow-2 border-1 border-200 border-round-md p-3">
-            uam asperiores ipsam praesentium?
-          </div>
-          <div class="ml-2 flex align-items-end text-gray-400">
-            asdas
-          </div>
-        </div>
-        <div class="flex mb-2 justify-content-end">
-          <div class="mr-2 flex align-items-end text-gray-400">
-            asdas
-          </div>
-          <div class="w-max shadow-2 text-white border-round-md p-3 custom-background">
-            uam asperiores ipsam praesentium?
-          </div>
-        </div>
+        <ng-container *ngFor="let message of listMessages">
+          <ng-container *ngIf="!message.isMe">
+            <div class="flex mb-2">
+              <div class="w-max  shadow-2 border-1 border-200 border-round-md p-3">
+                {{ message.content }}
+              </div>
+              <div class="ml-2 flex align-items-end text-gray-400">
+                {{ message.createdAt | date:'hh:mm' }}
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="message.isMe">
+            <div class="flex mb-2 justify-content-end">
+              <div class="mr-2 flex align-items-end text-gray-400">
+                {{ message.createdAt | date:'hh:mm' }}
+              </div>
+              <div class="w-max shadow-2 text-white border-round-md p-3 custom-background">
+                {{ message.content }}
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
       </div>
 
       <div class="flex mt-3">
