@@ -30,7 +30,7 @@ export class BaseService {
     }
 
     update(id: string, data: any) {
-        return this.http.put(`${this.getBaseUrl}/${id}`, data);
+        return this.http.patch(`${this.getBaseUrl}/${id}`, data);
     }
 
     delete(id: string) {

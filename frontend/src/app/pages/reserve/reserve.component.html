@@ -1,4 +1,28 @@
 <div class="content-conatiner">
-    <page-header [title]="'นัดหมายออนไลน์'" [showButton]="false">
-    </page-header>
+  <page-header [title]="'นัดหมายออนไลน์'" [showButton]="false">
+  </page-header>
+  <ng-container *ngIf="listAppointment.length; else noData">
+    <ng-container *ngFor="let item of listAppointment">
+      <div class="shadow-2 border-round-md p-3 mb-3 cursor-pointer" (click)="viewDetail(item)">
+        <div class="text-lg font-bold">{{ item.Record.firstName }} {{ item.Record.lastName }}</div>
+        <div>
+          <span>แพทย์ที่นัดหมาย :</span>
+          <span class=" font-bold ml-2">{{ item.Doctor.prefix }}{{ item.Doctor.firstName }} {{
+            item.Doctor.lastName }}</span>
+        </div>
+        <div>
+          <span>วันที่นัดหมาย :</span>
+          <span class=" font-bold ml-2">{{ item.date | date:'hh:mm'}} น.</span>
+          <span class=" font-bold ml-2">{{ item.date | date:'dd/MM/yyyy'}}</span>
+        </div>
+        <div>
+          <span>รายละเอียด :</span>
+          <span class=" font-bold ml-2">{{ item.description || "-"}}</span>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-template #noData>
+    <no-datalist [message]="'ยังไม่มีการนัดหมายในตอนนี้'" [showButton]="false"></no-datalist>
+  </ng-template>
 </div>

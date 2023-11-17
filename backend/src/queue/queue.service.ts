@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateQueueDto } from './dto/create-queue.dto';
+import { Queue } from '@prisma/client';
 
 @Injectable()
 export class QueueService {
@@ -37,6 +38,26 @@ export class QueueService {
       },
       orderBy: {
         date: 'desc',
+      },
+    });
+  }
+
+  async updateStatus(queueId: number, status: string): Promise<Queue> {
+    const isQueueExist = await this.prisma.queue.findUnique({
+      where: { id: queueId },
+    });
+
+    if (!isQueueExist) {
+      throw new HttpException(
+        'Appointment does not exist',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return this.prisma.queue.update({
+      where: { id: queueId },
+      data: {
+        status,
       },
     });
   }

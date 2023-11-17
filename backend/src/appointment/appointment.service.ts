@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Appointment, Status } from '@prisma/client';
+import { Appointment } from '@prisma/client';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 
 @Injectable()
@@ -56,12 +56,20 @@ export class AppointmentService {
   }
 
   async getAll(): Promise<Appointment[]> {
-    return this.prisma.appointment.findMany();
+    return this.prisma.appointment.findMany({
+      include: {
+        Doctor: true,
+        Record: true,
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
   }
 
   async updateStatus(
     appointmentId: string,
-    status: Status,
+    status: string,
   ): Promise<Appointment> {
     const isAppointmentExist = await this.prisma.appointment.findUnique({
       where: { id: appointmentId },

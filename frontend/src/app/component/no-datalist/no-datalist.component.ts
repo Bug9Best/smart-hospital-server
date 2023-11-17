@@ -16,5 +16,6 @@ export class NoDatalistComponent {
 
   @Input() message: string = '';
   @Input() buttonLabel: string= '';
+  @Input() showButton: boolean = true;
 
 }

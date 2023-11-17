@@ -7,17 +7,23 @@ import { PageHeaderComponent } from 'src/app/component/page-header/page-header.c
 import { PrimeNGModule } from 'src/app/modules/primeng.module';
 import { ThaiModule } from 'src/app/modules/thai.module';
 import { ReserveComponent } from './reserve.component';
+import { ReserveDetailComponent } from './reserve-detail/reserve-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ReserveComponent,
   },
+  {
+    path: 'detail/:id',
+    component: ReserveDetailComponent,
+  }
 ];
 
 @NgModule({
   declarations: [
-    ReserveComponent
+    ReserveComponent,
+    ReserveDetailComponent
   ],
   imports: [
     CommonModule,

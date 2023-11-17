@@ -21,6 +21,7 @@ enum DoctorBranch {
 
 enum Status {
   WAITING
+  CANCEL
   DONE
 }
 
@@ -100,7 +101,7 @@ model Appointment {
   title       String
   description String?
 
-  status Status @default(WAITING)
+  status String @default("WAITING")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -115,7 +116,7 @@ model Appointment {
 model Queue {
   id     Int      @id @default(autoincrement())
   date   DateTime
-  status Status   @default(WAITING)
+  status String   @default("WAITING")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -7,6 +7,7 @@ import { PageHeaderComponent } from 'src/app/component/page-header/page-header.c
 import { PrimeNGModule } from 'src/app/modules/primeng.module';
 import { ThaiModule } from 'src/app/modules/thai.module';
 import { ChatComponent } from './chat.component';
+import { ChatMessageComponent } from './chat-message/chat-message.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    ChatComponent
+    ChatComponent,
+    ChatMessageComponent
   ],
   imports: [
     CommonModule,

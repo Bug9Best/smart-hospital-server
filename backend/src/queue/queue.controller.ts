@@ -1,4 +1,12 @@
-import { Controller, Post, Get, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  Patch,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { QueueService } from './queue.service';
 import { CreateQueueDto } from './dto/create-queue.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -16,5 +24,13 @@ export class QueueController {
   @Post()
   create(@Body() data: CreateQueueDto): Promise<void> {
     return this.queueService.createQueue(data);
+  }
+
+  @Patch(':queueId')
+  update(
+    @Param('queueId') queueId: number,
+    @Query('status') status: string,
+  ): Promise<any> {
+    return this.queueService.updateStatus(queueId, status);
   }
 }

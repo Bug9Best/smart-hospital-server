@@ -1,4 +1,42 @@
 <div class="content-conatiner">
-    <page-header [title]="'คิวรับบริการ'" [showButton]="false">
-    </page-header>
+  <page-header [title]="'คิวรับบริการ'" [showButton]="false">
+  </page-header>
+
+  <ng-container *ngIf="listQueue.length; else noData">
+    <div class="shadow-2 border-round-md p-3 mb-3">
+      <div class="flex flex-column align-items-center justify-content-center w-full">
+        <div class="text-xl font-bold">ลำดับคิวปัจจุบัน</div>
+        <div class="text-8xl font-bold"> {{ listQueue[0].id}} </div>
+        <div class="text-xl font-bold">จากทั้งหมด {{ listQueue.length }} </div>
+      </div>
+      <p-divider></p-divider>
+      <div>
+        <button pButton label="คิวถัดไป" class="w-full p-button-secondary" (click)="nextQueue()"></button>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <p-table [value]="listQueue" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>คิวที่</th>
+          <th>เวลา-วันที่จองคิว</th>
+          <th>ชื่อ-นามสกุลผู้จอง</th>
+          <th>สถานะ</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+        <tr>
+          <td>{{ rowIndex +1 }}</td>
+          <td>{{ row.date | date: 'hh:MM' }} น. {{ row.date | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ row.Record?.prefix }}{{ row.Record?.firstName }} {{ row.Record?.lastName }}</td>
+          <td>{{ row.status }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+  <ng-template #noData>
+    <no-datalist [message]="'ยังไม่มีคิวในตอนนี้'" [showButton]="false"></no-datalist>
+  </ng-template>
 </div>

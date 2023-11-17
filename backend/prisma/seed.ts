@@ -1,28 +1,29 @@
 import { drugs } from './drugs';
 import { staffs } from './staffs';
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log(`Start seeding ...`)
+  console.log(`Start seeding ...`);
 
-  // const createStaff = await prisma.staff.createMany({
-  //   data: staffs,
-  // });
+  const createStaff = await prisma.staff.createMany({
+    data: staffs,
+  });
 
   const createDrug = await prisma.drugDisplay.createMany({
     data: drugs,
   });
-  console.log(`Seeding finished.`)
+  console.log(`Seeding finished.`);
+  console.log({ createStaff, createDrug });
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

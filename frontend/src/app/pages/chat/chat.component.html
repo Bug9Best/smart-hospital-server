@@ -1,4 +1,22 @@
 <div class="content-conatiner">
-    <page-header [title]="'การสนทนา'" [showButton]="false">
-    </page-header>
+  <page-header [title]="'การสนทนา'" [showButton]="false">
+  </page-header>
+  <div class="grid">
+    <div class="col-12 shadow-2 border-round-md p-0 m-0 content-height overflow-y-scroll">
+      <div class="font-bold text-lg text-white custom-background mb-2 p-3 w-full">
+        ผู้สนทนา
+      </div>
+      <ng-container *ngFor="let item of listConversation">
+        <div class="shadow-2 border-round-md p-3 mb-2 mx-2 cursor-pointer" (click)="selectConversation(item)">
+          {{ item }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="flex col-12 span-2 h-full">
+      <p-divider layout="vertical" class="-ml-4"></p-divider>
+      <div class="w-full h-full">
+        <chat-message [selectedConversation]="selectedConversation"></chat-message>
+      </div>
+    </div>
+  </div>
 </div>

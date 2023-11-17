@@ -10,7 +10,6 @@ import {
 import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Status } from '@prisma/client';
 
 @ApiTags('appointment')
 @Controller('appointment')
@@ -35,7 +34,7 @@ export class AppointmentController {
   @Patch(':appointmentId')
   update(
     @Param('appointmentId') appointmentId: string,
-    @Query('status') status: Status,
+    @Query('status') status: string,
   ): Promise<any> {
     return this.appointmentService.updateStatus(appointmentId, status);
   }
