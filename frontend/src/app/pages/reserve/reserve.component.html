@@ -4,7 +4,12 @@
   <ng-container *ngIf="listAppointment.length; else noData">
     <ng-container *ngFor="let item of listAppointment">
       <div class="shadow-2 border-round-md p-3 mb-3 cursor-pointer" (click)="viewDetail(item)">
-        <div class="text-lg font-bold">{{ item.Record.firstName }} {{ item.Record.lastName }}</div>
+        <div class="flex justify-content-between">
+          <div class="text-lg font-bold">{{ item.Record.firstName }} {{ item.Record.lastName }}</div>
+          <div class="">
+            <p-tag [severity]="getSeverity(item.status)" [value]="item.status"></p-tag>
+          </div>
+        </div>
         <div>
           <span>แพทย์ที่นัดหมาย :</span>
           <span class=" font-bold ml-2">{{ item.Doctor.prefix }}{{ item.Doctor.firstName }} {{

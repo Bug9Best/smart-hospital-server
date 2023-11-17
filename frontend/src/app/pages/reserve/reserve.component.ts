@@ -29,4 +29,16 @@ export class ReserveComponent implements OnInit {
   viewDetail(item: any) {
     this.router.navigate(['/reserve/detail', item.id]);
   }
+
+  getSeverity(item: any) {
+    if (item.severity === 'WAITING') {
+      return 'info';
+    }
+    else if (item.severity === 'DONE') {
+      return 'success';
+    }
+    else {
+      return 'bg-danger';
+    }
+  }
 }
