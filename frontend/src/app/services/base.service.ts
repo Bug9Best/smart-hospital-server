@@ -10,7 +10,7 @@ export class BaseService {
     path: string = '_blank';
 
     constructor(
-        private http: HttpClient
+        protected http: HttpClient
     ) { }
 
     get getBaseUrl(): string {
@@ -29,8 +29,8 @@ export class BaseService {
         return this.http.post(this.getBaseUrl, data);
     }
 
-    update(id: string, data: any) {
-        return this.http.patch(`${this.getBaseUrl}/${id}`, data);
+    update(id: number, data: any) {
+        return this.http.put(`${this.getBaseUrl}/${id}`, data);
     }
 
     delete(id: string) {

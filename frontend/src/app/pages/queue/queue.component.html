@@ -26,9 +26,9 @@
           <th>สถานะ</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+      <ng-template pTemplate="body" let-row>
         <tr>
-          <td>{{ rowIndex +1 }}</td>
+          <td>{{ row.id }}</td>
           <td>{{ row.date | date: 'hh:MM' }} น. {{ row.date | date: 'dd/MM/yyyy' }}</td>
           <td>{{ row.Record?.prefix }}{{ row.Record?.firstName }} {{ row.Record?.lastName }}</td>
           <td>{{ row.status }}</td>

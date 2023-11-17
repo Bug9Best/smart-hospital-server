@@ -43,6 +43,7 @@ export class QueueService {
   }
 
   async updateStatus(queueId: number, status: string): Promise<Queue> {
+    queueId = parseInt(queueId.toString());
     const isQueueExist = await this.prisma.queue.findUnique({
       where: { id: queueId },
     });

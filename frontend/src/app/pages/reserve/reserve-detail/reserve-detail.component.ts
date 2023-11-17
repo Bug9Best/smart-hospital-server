@@ -43,7 +43,7 @@ export class ReserveDetailComponent implements OnInit {
 
   changeStatus(status: string) {
     this.appontmentService
-      .update(this.appointmentId, { status: status })
+      .update(parseInt(this.appointmentId), { status: status })
       .subscribe((res: any) => {
         this.getAppontmentDetail();
       });

@@ -38,9 +38,11 @@ export class QueueComponent implements OnInit {
       message: 'คุณต้องการที่จะไปยังคิวถัดไปหรือไม่?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.queueService.update(this.listQueue[0].id, { status: this.queueStatus.DONE }).subscribe((res: any) => {
-          this.getQueue();
-        })
+        this.queueService
+          .updateQueue(parseInt(this.listQueue[0].id), this.queueStatus.DONE)
+          .subscribe((res: any) => {
+            this.getQueue();
+          })
       }
     });
 
